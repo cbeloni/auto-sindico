@@ -1,0 +1,35 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <h2>Bem-vindo à Home!</h2>
+    <p>{{ message }}</p>
+    <button class="btn btn-custom">Saiba Mais</button>
+    <!-- Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Detalhes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Aqui estão os detalhes adicionais que você queria saber.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.btn-custom').addEventListener('click', function() {
+            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            myModal.show();
+        });
+    </script>
+    <div class="alert alert-warning mt-4" role="alert">
+        Este é um alerta de aviso do Bootstrap!
+    </div>
+    
+{% endblock %}

@@ -8,6 +8,7 @@ pydantic = "*"
 fastapi = "*"
 uvicorn = "*"
 httpx = "*"
+jinja2 = "*"
 
 [dev-packages]
 
