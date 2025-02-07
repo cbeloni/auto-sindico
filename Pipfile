@@ -10,6 +10,7 @@ uvicorn = "*"
 httpx = "*"
 jinja2 = "*"
 python-dotenv = "*"
+mysql-connector-python = "*"
 
 [dev-packages]
 

@@ -4,58 +4,41 @@ from email.header import decode_header
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
+from service.csv_service import read_lines
+from repository.extrato import ExtratoRepository
+
 load_dotenv()
 
-email = os.environ.get('IMAP_EMAIL')
-password = os.environ.get('IMAP_PASSWORD')
+extrato_repository = ExtratoRepository()
 
 
-def read_emails_from_gmail(username, password):
+imap_email = os.environ.get('IMAP_EMAIL')
+imap_password = os.environ.get('IMAP_PASSWORD')
+
+
+def read_emails_from_gmail():
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
-    mail.login(username, password)
+    mail.login(imap_email, imap_password)
     mail.select("inbox")
     date = (datetime.now() - timedelta(15)).strftime("%d-%b-%Y")        
     status, messages = mail.search(None, f'(UNSEEN SINCE {date} FROM "naoresponda@cora.com.br")')
     email_ids = messages[0].split()
-    
+    linhas = []
     for email_id in email_ids:
         status, msg_data = mail.fetch(email_id, "(RFC822)")
-        
         for response_part in msg_data:
             if isinstance(response_part, tuple):
                 msg = email.message_from_bytes(response_part[1])
-                
-                # Decode the email subject
-                subject, encoding = decode_header(msg["Subject"])[0]
+                subject, encoding = decode_header(msg['Subject'])[0]
                 if isinstance(subject, bytes):
-                    subject = subject.decode(encoding if encoding else "utf-8")
+                    subject = subject.decode(encoding or 'utf-8')
                 
-                # Decode the email sender
-                from_ = msg.get("From")
+                for file in msg.walk():
+                    linhas = read_lines(file)
                 
-                print("Subject:", subject)
-                print("From:", from_)
-                
-                # If the email message is multipart
-                if msg.is_multipart():
-                    for part in msg.walk():
-                        content_type = part.get_content_type()
-                        content_disposition = str(part.get("Content-Disposition"))
-                        
-                        try:
-                            body = part.get_payload(decode=True).decode()
-                        except:
-                            pass
-                        
-                        if content_type == "text/plain" and "attachment" not in content_disposition:
-                            print("Body:", body)
-                else:
-                    content_type = msg.get_content_type()
-                    body = msg.get_payload(decode=True).decode()
-                    if content_type == "text/plain":
-                        print("Body:", body)
+                for linha in linhas:
+                    extrato_repository.salvar_registro(linha)
     
     # Logout and close the connection
     mail.logout()
-
-read_emails_from_gmail(email, password)
+    return linhas

@@ -1,13 +1,10 @@
 from fastapi import FastAPI
-from models import MsgPayload
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
-
+from service.email_service import read_emails_from_gmail
 
 app = FastAPI()
-messages_list: dict[int, MsgPayload] = {}
-
 templates = Jinja2Templates(directory="templates")
 
 
@@ -15,6 +12,10 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/about")
 def about() -> dict[str, str]:
     return {"message": "This is the about page."}
+
+@app.get("/mail")
+def about() -> dict[str, str]:
+    return read_emails_from_gmail()
 
 @app.get("/", response_class=HTMLResponse)
 async def read_home(request: Request):
