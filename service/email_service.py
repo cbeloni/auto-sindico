@@ -2,6 +2,7 @@ import imaplib
 import email
 from email.header import decode_header
 from datetime import datetime, timedelta
+import logging
 from dotenv import load_dotenv
 import os
 from service.csv_service import read_lines
@@ -37,7 +38,10 @@ def read_emails_from_gmail():
                     linhas = read_lines(file)
                 
                 for linha in linhas:
-                    extrato_repository.salvar_registro(linha)
+                    try:
+                        extrato_repository.salvar(linha)
+                    except Exception as e:
+                        logging.info(f"Error ao salvar extrato: {e}")
     
     # Logout and close the connection
     mail.logout()

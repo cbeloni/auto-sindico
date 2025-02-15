@@ -23,7 +23,7 @@ def read_lines(file: Generator):
             if i == 0:
                 continue
             data, transacao, tipo_transacao, identificacao, valor = row
-            extrato = Extrato(data, transacao, tipo_transacao, identificacao, valor)
+            extrato = Extrato('cora', data, transacao, tipo_transacao, identificacao, valor)
             linhas.append(extrato)
             
         return linhas

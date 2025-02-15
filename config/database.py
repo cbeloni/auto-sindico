@@ -1,5 +1,6 @@
 from dotenv import load_dotenv, dotenv_values
 import logging
+from sqlalchemy import create_engine
 import mysql.connector
 
 load_dotenv()
@@ -26,3 +27,12 @@ def criar_conexao(config=None):
     logging.info(f"conectado: {connection.is_connected()}")
     
     return connection
+
+def criar_engine(config=None):
+    connection = criar_conexao(config)
+    connection_url = f"mysql+mysqlconnector://{_config['user']}:{_config['password']}@{_config['host']}/{_config['database']}"
+    engine = create_engine(connection_url)
+    
+    logging.info("SQLAlchemy engine created")
+    
+    return engine
