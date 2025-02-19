@@ -48,3 +48,7 @@ class Caixa(Base):
             'caixa_ap3': self.caixa_ap3,
             'caixa_ap4': self.caixa_ap4,
         }
+        
+def caixa_ordenado_por_id_desc():
+    caixas = session.query(Caixa).order_by(Caixa.id.desc()).all()
+    return [caixa.to_dict() for caixa in caixas]
