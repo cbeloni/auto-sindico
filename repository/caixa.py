@@ -24,7 +24,7 @@ class Caixa(Base):
     caixa_ap2 = Column(DECIMAL(10, 2), nullable=False)
     caixa_ap3 = Column(DECIMAL(10, 2), nullable=False)
     caixa_ap4 = Column(DECIMAL(10, 2), nullable=False)
-
+    total = Column(DECIMAL(10, 2), nullable=False)
 
     def save(self):
         existing_record = session.query(Caixa).filter_by(mes=self.mes, ano=self.ano).first()
@@ -47,6 +47,7 @@ class Caixa(Base):
             'caixa_ap2': self.caixa_ap2,
             'caixa_ap3': self.caixa_ap3,
             'caixa_ap4': self.caixa_ap4,
+            'caixa_total': self.total,
         }
         
 def caixa_ordenado_por_id_desc():
