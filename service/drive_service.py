@@ -14,10 +14,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 imap_email = os.environ.get('API_KEY')
-API_KEY = os.environ.get('FOLDER_ID')
+API_KEY = os.environ.get('API_KEY')
 
 # ID da pasta no Google Drive
-FOLDER_ID = os.environ.get('API_KEY')
+FOLDER_ID = os.environ.get('FOLDER_ID')
 
 def get_last_file_from_drive():
     service = build('drive', 'v3', developerKey=API_KEY)

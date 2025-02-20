@@ -5,6 +5,8 @@ from repository.extrato import ExtratoRepository
 from util.datas_uteis import meses_portugues
 extrato_repository = ExtratoRepository()
 
+identificacao_sabesp = ['sabesp','cia de saneamento basico',]
+identificacao_enel = ['enel',]
 identificacao_outros = ['ecoville',]
 
 def fechar_despesas(data_inicial, data_final):
@@ -15,9 +17,9 @@ def fechar_despesas(data_inicial, data_final):
     for resultado in resultados:
         if 'edileuza' in resultado.identificacao.lower() and resultado.tipo_transacao == get_transacao_debito(resultado.banco):
             despesas['faxina'] += resultado.valor
-        elif 'enel' in resultado.identificacao.lower() and resultado.tipo_transacao == get_transacao_debito(resultado.banco):
+        elif any(item in resultado.identificacao.lower() for item in identificacao_enel) and resultado.tipo_transacao == get_transacao_debito(resultado.banco):
             despesas['enel'] += resultado.valor
-        elif 'sabesp' in resultado.identificacao.lower() and resultado.tipo_transacao == get_transacao_debito(resultado.banco):
+        elif any(item in resultado.identificacao.lower() for item in identificacao_sabesp) and resultado.tipo_transacao == get_transacao_debito(resultado.banco):
             despesas['sabesp'] += resultado.valor
         elif any(item in resultado.identificacao.lower() for item in identificacao_outros) and resultado.tipo_transacao == get_transacao_debito(resultado.banco):
             despesas['outros'] += resultado.valor

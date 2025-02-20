@@ -15,112 +15,118 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="despesas" role="tabpanel" aria-labelledby="despesas-tab">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Mês</th>
-                        <th>Ano</th>
-                        <th>Enel</th>
-                        <th>Sabesp</th>
-                        <th>Faxina</th>
-                        <th>Outros</th>
-                        <th>Total</th>
-                        <th>Valor Mensal AP1</th>
-                        <th>Valor Mensal AP2</th>
-                        <th>Valor Mensal AP3</th>
-                        <th>Valor Mensal AP4</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for despesa in despesas %}
-                    <tr>
-                        <td>{{ despesa.mes }}</td>
-                        <td>{{ despesa.ano }}</td>
-                        <td>{{ despesa.enel }}</td>
-                        <td>{{ despesa.sabesp }}</td>
-                        <td>{{ despesa.faxina }}</td>
-                        <td>{{ despesa.outros }}</td>
-                        <td>{{ despesa.total }}</td>
-                        <td>
-                            {{ despesa.valor_mensal_ap1 }}
-                            {% if despesa.caixa_ap1|default(0) > 0 %}
-                                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ despesa.valor_mensal_ap2 }}
-                            {% if despesa.caixa_ap2|default(0) > 0 %}
-                                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ despesa.valor_mensal_ap3 }}
-                            {% if despesa.caixa_ap3|default(0) > 0 %}
-                                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ despesa.valor_mensal_ap4 }}
-                            {% if despesa.caixa_ap4|default(0) > 0 %}
-                                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Ano</th>
+                            <th>Enel</th>
+                            <th>Sabesp</th>
+                            <th>Faxina</th>
+                            <th>Outros</th>
+                            <th>Total</th>
+                            <th>Valor Mensal AP1</th>
+                            <th>Valor Mensal AP2</th>
+                            <th>Valor Mensal AP3</th>
+                            <th>Valor Mensal AP4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for despesa in despesas %}
+                        <tr>
+                            <td>{{ despesa.mes }}</td>
+                            <td>{{ despesa.ano }}</td>
+                            <td>{{ despesa.enel }}</td>
+                            <td>{{ despesa.sabesp }}</td>
+                            <td>{{ despesa.faxina }}</td>
+                            <td>{{ despesa.outros }}</td>
+                            <td>{{ despesa.total }}</td>
+                            <td>
+                                {{ despesa.valor_mensal_ap1 }}
+                                {% if despesa.caixa_ap1|default(0) > 0 %}
+                                    <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ despesa.valor_mensal_ap2 }}
+                                {% if despesa.caixa_ap2|default(0) > 0 %}
+                                    <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ despesa.valor_mensal_ap3 }}
+                                {% if despesa.caixa_ap3|default(0) > 0 %}
+                                    <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ despesa.valor_mensal_ap4 }}
+                                {% if despesa.caixa_ap4|default(0) > 0 %}
+                                    <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="tab-pane fade" id="pagamentos" role="tabpanel" aria-labelledby="pagamentos-tab">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Mês</th>
-                        <th>Ano</th>
-                        <th>Pagamentos AP1</th>
-                        <th>Pagamentos AP2</th>
-                        <th>Pagamentos AP3</th>
-                        <th>Pagamentos AP4</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for despesa in despesas %}
-                    <tr>
-                        <td>{{ despesa.mes }}</td>
-                        <td>{{ despesa.ano }}</td>
-                        <td>{{ despesa.pagamentos_ap1 }}</td>
-                        <td>{{ despesa.pagamentos_ap2 }}</td>
-                        <td>{{ despesa.pagamentos_ap3 }}</td>
-                        <td>{{ despesa.pagamentos_ap4 }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Ano</th>
+                            <th>Pagamentos AP1</th>
+                            <th>Pagamentos AP2</th>
+                            <th>Pagamentos AP3</th>
+                            <th>Pagamentos AP4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for despesa in despesas %}
+                        <tr>
+                            <td>{{ despesa.mes }}</td>
+                            <td>{{ despesa.ano }}</td>
+                            <td>{{ despesa.pagamentos_ap1 }}</td>
+                            <td>{{ despesa.pagamentos_ap2 }}</td>
+                            <td>{{ despesa.pagamentos_ap3 }}</td>
+                            <td>{{ despesa.pagamentos_ap4 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="tab-pane fade" id="caixa" role="tabpanel" aria-labelledby="caixa-tab">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Mês</th>
-                        <th>Ano</th>
-                        <th>Caixa AP1</th>
-                        <th>Caixa AP2</th>
-                        <th>Caixa AP3</th>
-                        <th>Caixa AP4</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for despesa in despesas %}
-                    <tr>
-                        <td>{{ despesa.mes }}</td>
-                        <td>{{ despesa.ano }}</td>
-                        <td>{{ despesa.caixa_ap1 }}</td>
-                        <td>{{ despesa.caixa_ap2 }}</td>
-                        <td>{{ despesa.caixa_ap3 }}</td>
-                        <td>{{ despesa.caixa_ap4 }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Ano</th>
+                            <th>Caixa AP1</th>
+                            <th>Caixa AP2</th>
+                            <th>Caixa AP3</th>
+                            <th>Caixa AP4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for despesa in despesas %}
+                        <tr>
+                            <td>{{ despesa.mes }}</td>
+                            <td>{{ despesa.ano }}</td>
+                            <td>{{ despesa.caixa_ap1 }}</td>
+                            <td>{{ despesa.caixa_ap2 }}</td>
+                            <td>{{ despesa.caixa_ap3 }}</td>
+                            <td>{{ despesa.caixa_ap4 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
