@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 COPY . .
 RUN apt-get update
-RUN apt-get install -y build-essential python3-greenlet pip git wget libgdal-dev
+RUN apt-get install -y build-essential pip git wget
 RUN pip install pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --deploy --ignore-pipfile
