@@ -1,13 +1,17 @@
-FROM ubuntu:22.04
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Use the official Python image from the Docker Hub
+FROM python:3.9-slim
 
-WORKDIR /
-COPY . .
-RUN apt-get update
-RUN apt-get install -y pip git wget
-RUN pip install pipenv
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Pipfile and Pipfile.lock to the working directory
 COPY Pipfile Pipfile.lock ./
-RUN pipenv install --deploy --ignore-pipfile
-# ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.server:app"]
-ENTRYPOINT ["python3","main.py"]
+
+# Install pipenv and the dependencies
+RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
+
+# Copy the rest of the application code to the working directory
+COPY . .
+
+# Command to run the application
+CMD ["pipenv", "run", "python", "main.py"]
