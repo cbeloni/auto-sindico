@@ -2,10 +2,10 @@ FROM ubuntu:22.04
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
+WORKDIR /
 COPY . .
 RUN apt-get update
-RUN apt-get install -y build-essential pip git wget
+RUN apt-get install -y pip git wget
 RUN pip install pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --deploy --ignore-pipfile
