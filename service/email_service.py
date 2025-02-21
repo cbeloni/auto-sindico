@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 import os
 from service.csv_service import read_lines
 from repository.extrato import ExtratoRepository
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 load_dotenv()
 
@@ -46,3 +49,22 @@ def read_emails_from_gmail():
     # Logout and close the connection
     mail.logout()
     return linhas
+
+def enviar_email(subject, body, to_email):
+    from_email = imap_email
+    password = imap_password
+
+    # Create the email headers and set the subject, from, and to addresses
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+
+    # Attach the email body to the message
+    msg.attach(MIMEText(body, 'html'))
+
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.login(from_email, password)
+    server.sendmail(from_email, to_email, msg.as_string())
+    server.quit()
+    logging.info(f"Email sent to {to_email}")    

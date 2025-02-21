@@ -18,10 +18,10 @@ def criar_conexao(config=None):
         _config = config
 
     connection = mysql.connector.connect(
-        host=_config['host'],
-        user=_config['user'],
-        password=_config['password'],
-        database=_config['database']
+        host=_config['HOST'],
+        user=_config['USER'],
+        password=_config['PASSWORD'],
+        database=_config['DATABASE']
     )
     
     logging.info(f"conectado: {connection.is_connected()}")
