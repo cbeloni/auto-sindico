@@ -9,6 +9,5 @@ RUN apt-get install -y build-essential pip git wget libgdal-dev
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry lock 
-RUN poetry install
-# ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.server:app"]
-ENTRYPOINT ["python3","main.py"]
+RUN poetry install --no-root
+ENTRYPOINT ["poetry", "run", "python3", "main.py"]
