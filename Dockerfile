@@ -8,8 +8,8 @@ RUN apt-get install -y build-essential python3-greenlet pip git wget libgdal-dev
 RUN pip install pipenv 
 COPY Pipfile Pipfile.lock ./
 
-RUN pipenv shell
 RUN pipenv install
 
 COPY . .
-ENTRYPOINT ["python3", "main.py"]
+RUN echo "iniciando o pipenv run..."
+ENTRYPOINT ["pipenv", "run", "python3", "main.py"]
