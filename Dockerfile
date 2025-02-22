@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 RUN apt-get update
 RUN apt-get install -y build-essential pip git wget libgdal-dev
-RUN pip install "poetry"
+RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry lock --no-update
 RUN poetry install --no-dev
