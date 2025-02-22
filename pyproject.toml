@@ -6,9 +6,9 @@ authors = ["Seu Nome <seu.email@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+uvicorn = "^0.18.3"
+fastapi = "^0.81.0"
 pydantic = "*"
-fastapi = "*"
-uvicorn = "*"
 httpx = "*"
 jinja2 = "*"
 python-dotenv = "*"

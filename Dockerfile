@@ -3,14 +3,12 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
-RUN apt-get update
-RUN apt-get install -y build-essential python3-greenlet pip git wget libgdal-dev
-RUN pip install pipenv 
-COPY Pipfile Pipfile.lock ./
-RUN pip install --upgrade pip pipenv
-RUN echo "iniciando o instalacao dependências"
-RUN pipenv install --deploy --system --verbose
-
 COPY . .
-RUN echo "iniciando o pipenv run..."
-ENTRYPOINT ["pipenv", "run", "python3", "main.py"]
+RUN apt-get update
+RUN apt-get install -y build-essential pip git wget libgdal-dev
+RUN pip install "poetry"
+RUN poetry config virtualenvs.create false
+RUN poetry lock --no-update
+RUN poetry install --no-dev
+# ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8000", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.server:app"]
+ENTRYPOINT ["python3","main.py"]
