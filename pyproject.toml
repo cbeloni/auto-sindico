@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "auto-sindico"
+version = "0.1.0"
+description = ""
+authors = ["Seu Nome <seu.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic = "*"
+fastapi = "*"
+uvicorn = "*"
+httpx = "*"
+jinja2 = "*"
+python-dotenv = "*"
+mysql-connector-python = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
+pandas = "*"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
