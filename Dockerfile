@@ -6,11 +6,10 @@ WORKDIR /app
 RUN apt-get update
 RUN apt-get install -y build-essential python3-greenlet pip git wget libgdal-dev
 RUN pip install pipenv 
-COPY Pipfile Pipfile.lock ./
+# COPY Pipfile Pipfile.lock ./
+COPY . .
 RUN pip install --upgrade pip pipenv
 RUN echo "iniciando o instalacao dependências"
 RUN pipenv install --deploy --system --verbose
-
-COPY . .
 RUN echo "iniciando o pipenv run..."
 ENTRYPOINT ["pipenv", "run", "python3", "main.py"]
