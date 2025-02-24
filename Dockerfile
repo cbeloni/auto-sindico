@@ -10,7 +10,8 @@ ENV PYTHONUNBUFFERED=1
 # Install & use pipenv
 COPY Pipfile Pipfile.lock ./
 RUN python -m pip install --upgrade pip
-RUN pip install pipenv && pipenv install --dev --system --deploy
+RUN pip install pipenv
+RUN pipenv install --system --deploy --ignore-pipfile
 
 WORKDIR /app
 COPY . /app
