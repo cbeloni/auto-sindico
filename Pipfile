@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
-fastapi = "*"
 uvicorn = "*"
 httpx = "*"
 jinja2 = "*"
@@ -15,6 +14,8 @@ google-api-python-client = "*"
 google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
 pandas = "*"
+sqlalchemy = "*"
+fastapi = "*"
 
 [dev-packages]
 
