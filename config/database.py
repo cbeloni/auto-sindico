@@ -17,6 +17,7 @@ def criar_conexao(config=None):
     if not _config:
         _config = config
 
+    logging.info(f"config: {_config}")
     connection = mysql.connector.connect(
         host=_config['HOST'],
         user=_config['USER'],
