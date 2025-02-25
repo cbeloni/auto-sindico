@@ -30,8 +30,9 @@ def criar_conexao(config=None):
     return connection
 
 def criar_engine(config=None):
-    connection = criar_conexao(config)
-    connection_url = f"mysql+mysqlconnector://{_config['USER']}:{_config['PASSWORD']}@{_config['HOST']}/{_config['DATABASE']}"
+    # connection = criar_conexao(config)
+    database_host=_config['HOST'] if _config['HOST'] is not None else '10.43.131.245'
+    connection_url = f"mysql+mysqlconnector://{_config['USER']}:{_config['PASSWORD']}@{database_host}/{_config['DATABASE']}"
     engine = create_engine(connection_url)
     
     logging.info("SQLAlchemy engine created")
