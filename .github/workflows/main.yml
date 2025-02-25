@@ -62,5 +62,5 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |          
-          kubectl apply -f argocd-mgc/auto-sindico-amd.yaml --insecure-skip-tls-verify
+          kubectl apply -f argocd-amd/auto-sindico-amd.yaml --insecure-skip-tls-verify
           kubectl rollout restart deployment/auto-sindico --insecure-skip-tls-verify
