@@ -3,7 +3,7 @@ name: Deploy Prod
 on:
   push:
     branches:
-      - main-v2
+      - main
 
 jobs:
   build-and-deploy:
@@ -46,7 +46,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: cbeloni/datasaude-api:amd64
+          tags: cbeloni/auto-sindico:amd64
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
@@ -62,5 +62,5 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |          
-          kubectl apply -f argocd-mgc/datasaude-api-mgc.yaml --insecure-skip-tls-verify
-          kubectl rollout restart deployment/datasaude-api --insecure-skip-tls-verify
+          kubectl apply -f argocd-mgc/auto-sindico-amd.yaml --insecure-skip-tls-verify
+          kubectl rollout restart deployment/auto-sindico --insecure-skip-tls-verify

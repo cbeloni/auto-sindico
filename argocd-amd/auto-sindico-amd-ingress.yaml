@@ -20,7 +20,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "web"
 spec:
   rules:
-    - host: auto-sindico-staging.192.168.0.201.sslip.io
+    - host: auto-sindico.201.23.17.249.sslip.io
       http:
         paths:
           - path: /
@@ -30,7 +30,7 @@ spec:
                 name: auto-sindico-svc
                 port:
                   number: 80
-    - host: auto-sindico-staging.beloni.dev.br
+    - host: auto-sindico.beloni.dev.br
       http:
         paths:
           - path: /
