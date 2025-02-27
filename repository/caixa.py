@@ -1,13 +1,8 @@
-from sqlalchemy import Column, Integer, String, DECIMAL, create_engine
+from sqlalchemy import Column, Integer, String, DECIMAL
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from config.database import criar_engine
+from config.database import criar_sessao
 
 Base = declarative_base()
-
-engine = criar_engine()
-Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
 
 class Caixa(Base):
     __tablename__ = 'caixa'
@@ -26,7 +21,7 @@ class Caixa(Base):
     total = Column(DECIMAL(10, 2), nullable=False)
 
     def save(self):
-        session = Session()
+        session = criar_sessao()
         existing_record = session.query(Caixa).filter_by(mes=self.mes, ano=self.ano).first()
         if existing_record:
             session.delete(existing_record)
@@ -51,6 +46,6 @@ class Caixa(Base):
         }
         
 def caixa_ordenado_por_id_desc():
-    session = Session()
+    session = criar_sessao()
     caixas = session.query(Caixa).order_by(Caixa.id.desc()).all()
     return [caixa.to_dict() for caixa in caixas]

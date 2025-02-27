@@ -2,6 +2,7 @@ from dotenv import load_dotenv, dotenv_values
 import logging
 from sqlalchemy import create_engine
 import mysql.connector
+from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 _config = dotenv_values(".env")
@@ -37,3 +38,7 @@ def criar_engine(config=None):
     logging.info("SQLAlchemy engine created")
     
     return engine
+
+def criar_sessao():
+    engine = criar_engine()
+    return sessionmaker(bind=engine)

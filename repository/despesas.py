@@ -1,14 +1,10 @@
-from sqlalchemy import create_engine, Column, Integer, String, DECIMAL, Computed
+from sqlalchemy import  Column, Integer, String, DECIMAL, Computed
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from config.database import criar_engine
+from config.database import criar_sessao
 
 Base = declarative_base()
-
-engine = criar_engine()
-Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
 
 class Despesa(Base):
     __tablename__ = 'despesas'
@@ -27,13 +23,13 @@ class Despesa(Base):
     valor_mensal_ap4 = Column(DECIMAL(10, 2), Computed('total / 4'), nullable=False)
 
     def save(self):
-        session = Session()
+        session = criar_sessao()
         existing_record = session.query(Despesa).filter_by(mes=self.mes, ano=self.ano).first()
         if existing_record:
             session.delete(existing_record)
             session.commit()
         session.add(self)
-        session.commit()            
+        session.commit()   
         
     def to_dict(self):
         return {
@@ -52,7 +48,7 @@ class Despesa(Base):
         }
         
 def despesas_por_data(mes, ano):
-    session = Session()
+    session = criar_sessao()
     existing_record = session.query(Despesa).filter_by(mes=mes, ano=ano).first()
     return existing_record.to_dict()
 
@@ -63,7 +59,7 @@ def despesas_ordenadas_por_id_desc():
     
 if __name__ == '__main__':
     # Database connection
-    engine = criar_engine()
+    engine = criar_sessao()
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
