@@ -3,13 +3,13 @@ from dto.fechamento_requests import get_transacao_debito
 from repository.despesas import Despesa
 from repository.extrato import ExtratoRepository
 from util.datas_uteis import meses_portugues
-extrato_repository = ExtratoRepository()
 
 identificacao_sabesp = ['sabesp','cia de saneamento basico',]
 identificacao_enel = ['enel',]
 identificacao_outros = ['ecoville',]
 
 def fechar_despesas(data_inicial, data_final):
+    extrato_repository = ExtratoRepository()
 
     resultados = extrato_repository.consultar(data_inicial, data_final)
 

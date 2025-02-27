@@ -2,11 +2,9 @@ from sqlalchemy import  Column, Integer, String, DECIMAL, Computed
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from config.database import criar_sessao
-from config.database_async import Database
+from config.database import get_session
 
 Base = declarative_base()
-database = Database()
 class Despesa(Base):
     __tablename__ = 'despesas'
     
@@ -24,8 +22,8 @@ class Despesa(Base):
     valor_mensal_ap4 = Column(DECIMAL(10, 2), Computed('total / 4'), nullable=False)
 
     def save(self):
-        session = database.get_session()
-        existing_record = session.query(Despesa).filter_by(mes=self.mes, ano=self.ano).first()
+        session = get_session()
+        existing_record = session.execute(Despesa).filter_by(mes=self.mes, ano=self.ano).first()
         if existing_record:
             session.delete(existing_record)
             session.commit()
@@ -49,18 +47,18 @@ class Despesa(Base):
         }
         
 def despesas_por_data(mes, ano):
-    session = database.get_session()
-    existing_record = session.query(Despesa).filter_by(mes=mes, ano=ano).first()
+    session = get_session()
+    existing_record = session.execute(Despesa).filter_by(mes=mes, ano=ano).first()
     return existing_record.to_dict()
 
 def despesas_ordenadas_por_id_desc():
-    session = database.get_session()
-    despesas = session.query(Despesa).order_by(Despesa.id.desc()).all()
+    session = get_session()
+    despesas = session.execute(Despesa).order_by(Despesa.id.desc()).all()
     return [despesa.to_dict() for despesa in despesas]
     
 if __name__ == '__main__':
     # Database connection
-    engine = criar_sessao()
+    engine = get_session()
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
