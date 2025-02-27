@@ -23,7 +23,7 @@ class Despesa(Base):
 
     def save(self):
         session = get_session()
-        existing_record = session.execute(Despesa).filter_by(mes=self.mes, ano=self.ano).first()
+        existing_record = session.query(Despesa).filter_by(mes=self.mes, ano=self.ano).first()
         if existing_record:
             session.delete(existing_record)
             session.commit()
@@ -48,12 +48,12 @@ class Despesa(Base):
         
 def despesas_por_data(mes, ano):
     session = get_session()
-    existing_record = session.execute(Despesa).filter_by(mes=mes, ano=ano).first()
+    existing_record = session.query(Despesa).filter_by(mes=mes, ano=ano).first()
     return existing_record.to_dict()
 
 def despesas_ordenadas_por_id_desc():
     session = get_session()
-    despesas = session.execute(Despesa).order_by(Despesa.id.desc()).all()
+    despesas = session.query(Despesa).order_by(Despesa.id.desc()).all()
     return [despesa.to_dict() for despesa in despesas]
     
 if __name__ == '__main__':
