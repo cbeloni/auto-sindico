@@ -31,15 +31,14 @@ def criar_conexao(config=None):
     return connection
 
 def criar_engine(config=None):
-    # connection = criar_conexao(config)
     connection_url = f"mysql+mysqlconnector://{_config['USER']}:{_config['PASSWORD']}@{_config['HOST']}/{_config['DATABASE']}"
-    engine = create_engine(connection_url)
+    engine = create_engine(connection_url, pool_pre_ping=True)
     
-    logging.info("SQLAlchemy engine created")
+    logging.info("SQLAlchemy engine created with pool_pre_ping enabled")
     
     return engine
 
-def criar_sessao():
+def get_session():
     engine = criar_engine()
     Session = sessionmaker(bind=engine)
     return Session()
