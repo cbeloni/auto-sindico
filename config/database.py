@@ -41,4 +41,5 @@ def criar_engine(config=None):
 
 def criar_sessao():
     engine = criar_engine()
-    return sessionmaker(bind=engine)
+    Session = sessionmaker(bind=engine)
+    return Session()
