@@ -13,7 +13,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-imap_email = os.environ.get('API_KEY')
 API_KEY = os.environ.get('API_KEY')
 
 # ID da pasta no Google Drive
