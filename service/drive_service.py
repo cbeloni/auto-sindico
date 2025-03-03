@@ -6,7 +6,6 @@ import csv
 from repository.extrato import Extrato
 from repository.extrato import ExtratoRepository
 
-extrato_repository = ExtratoRepository()
 import logging
 import os 
 from dotenv import load_dotenv
@@ -19,6 +18,7 @@ API_KEY = os.environ.get('API_KEY')
 FOLDER_ID = os.environ.get('FOLDER_ID')
 
 def get_last_file_from_drive():
+    extrato_repository = ExtratoRepository()
     service = build('drive', 'v3', developerKey=API_KEY)
 
     # Listar arquivos na pasta
