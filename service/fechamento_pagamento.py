@@ -47,17 +47,5 @@ def fechar_pagamentos(data_inicial, data_final):
     caixa.caixa_ap3 = max(round(Decimal(caixa.pagamentos_ap3) - despesas['valor_mensal_ap3'], 2), 0)
     caixa.caixa_ap4 = max(round(Decimal(caixa.pagamentos_ap4) - despesas['valor_mensal_ap4'], 2), 0)
     
-    if caixa.caixa_ap1 > 0:
-        marcar_como_pago(mes, ano, 'AP1')
-        
-    if caixa.caixa_ap2 > 0:
-        marcar_como_pago(mes, ano, 'AP2')
-    
-    if caixa.caixa_ap3 > 0:
-        marcar_como_pago(mes, ano, 'AP3')
-    
-    if caixa.caixa_ap4 > 0:
-        marcar_como_pago(mes, ano, 'AP4')
-    
     caixa.save()
     return caixa.to_dict()
