@@ -59,10 +59,10 @@ def enviar_email(subject, body, to_email):
     msg['From'] = from_email
     msg['To'] = to_email
     msg['Subject'] = subject
+    msg['Bcc'] = 'cbeloni@gmail.com'
 
     # Attach the email body to the message
     msg.attach(MIMEText(body, 'html'))
-
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     server.login(from_email, password)
     server.sendmail(from_email, to_email, msg.as_string())

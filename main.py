@@ -2,12 +2,14 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
+from dto.cobrar_request import CobrarRequest
 from dto.email import EmailRequest
 from dto.fechamento_requests import FechamentoRequest
 from dto.pix import PixRequest
 from repository.caixa import caixa_ordenado_por_id_desc
 from repository.concialicao import concialiacao_ordenadas_por_id_desc
 from repository.despesas import despesas_ordenadas_por_id_desc
+from service.cobrar_service import cobrar_e_enviar_email
 from service.drive_service import get_last_file_from_drive
 from service.email_service import enviar_email, read_emails_from_gmail
 from service.fechamento_despesas import fechar_despesas
@@ -69,28 +71,12 @@ def qrcode(request: PixRequest = PixRequest(
     return generate_qrcode(request)
 
 @app.post("/send-email")
-def send_email(request: EmailRequest) -> dict:
-    
-    templates = Jinja2Templates(directory="templates")
-    pix = PixRequest(
-        name_receiver='Cauê Beloni',
-        city_receiver='Santo André',
-        key='cbeloni@gmail.com',
-        identification='12345',
-        zipcode_receiver='09291250',
-        description='condominio mensal',
-        amount=1.0
-    )
-    pix_response = generate_qrcode(pix)
-    context = {
-        "request": request,
-        "mes": "Fevereiro",
-        "valor": "150,00",
-        "codigo_pix": pix_response.get("br_code"),
-        "imagem_base64": pix_response.get("qrcode")
-    }
-
-    request.body = templates.TemplateResponse("email.html", context).body.decode("utf-8")
-    
+def send_email(request: EmailRequest) -> dict:        
     enviar_email(request.subject, request.body, request.recipient)
+    return {"message": "Email sent successfully"}
+
+@app.post("/cobrar")
+def cobrar(request: CobrarRequest = CobrarRequest()) -> dict:
+    
+    cobrar_e_enviar_email(request)
     return {"message": "Email sent successfully"}
