@@ -32,7 +32,6 @@ class Caixa(Base):
         
     def to_dict(self):
         return {
-            'id': self.id,
             'mes': self.mes,
             'ano': self.ano,
             'pagamentos_ap1': self.pagamentos_ap1,
