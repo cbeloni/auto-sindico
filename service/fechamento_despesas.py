@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 
 from dto.fechamento_requests import get_transacao_debito
 from repository.despesas import Despesa
@@ -43,6 +44,8 @@ def fechar_despesas(data_inicial, data_final):
         outros=despesas['outros']*-1
     )
     despesa.save()
+    
+    logging.info(f"despesa: {despesa.to_dict()}")
     
     for key, valor_caixa in caixa_mapping.items():
         gerar_salvar_qrcode(
