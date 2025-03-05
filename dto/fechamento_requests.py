@@ -1,3 +1,4 @@
+
 from pydantic import BaseModel
 from datetime import datetime, timedelta
 
@@ -19,6 +20,11 @@ def last_day_of_current_month():
 
 class FechamentoRequest(BaseModel):
     data_inicial: str = last_day_of_previous_month()
+    data_final: str = last_day_of_current_month()
+
+
+class FechamentoDespesasRequest(BaseModel):
+    data_inicial: str = first_day_of_current_month()
     data_final: str = last_day_of_current_month()
     
 

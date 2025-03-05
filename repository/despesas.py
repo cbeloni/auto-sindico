@@ -32,7 +32,6 @@ class Despesa(Base):
         
     def to_dict(self):
         return {
-            'id': self.id if self.id is not None else 0,
             'mes': self.mes,
             'ano': self.ano,
             'enel': self.enel,

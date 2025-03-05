@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from dto.cobrar_request import CobrarRequest
 from dto.email import EmailRequest
-from dto.fechamento_requests import FechamentoRequest
+from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest
 from dto.pix import PixRequest
 from repository.caixa import caixa_ordenado_por_id_desc
 from repository.concialicao import concialiacao_ordenadas_por_id_desc
@@ -46,7 +46,7 @@ def concialiacao() -> list:
     return concialiacao_ordenadas_por_id_desc()
 
 @app.post("/fechamento-despesas")
-def fechamento(request: FechamentoRequest = FechamentoRequest()) -> dict:
+def fechamento(request: FechamentoDespesasRequest = FechamentoDespesasRequest()) -> dict:
     return fechar_despesas(request.data_inicial, request.data_final)
 
 @app.post("/fechamento-pagamentos")
