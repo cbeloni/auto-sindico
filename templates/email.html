@@ -38,10 +38,14 @@
             <p>Olá,</p>
             <p>O pagamento PIX para o mês de {{ mes }} está disponível.</p>
             <p>Valor: R$ {{ valor }}</p>
-            <p>Código PIX: {{ codigo_pix }}</p>
+            <p>Código PIX: </p>
+            <p>
+                <input type="text" id="codigo_pix" value="{{ codigo_pix }}" readonly>
+            </p>
+            <p><img src="{{ imagem_url }}" alt="Imagem do qrcode pix" width="100%"></p>
         </div>
         <div class="footer">
-            <img src="{{ imagem_url }}" alt="Imagem do qrcode pix" width="100%">
+            Gestão de Condominios
         </div>
     </div>
 </body>

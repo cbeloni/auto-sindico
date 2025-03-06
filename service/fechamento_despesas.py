@@ -1,14 +1,22 @@
 from datetime import datetime
+import logging
+
 from dto.fechamento_requests import get_transacao_debito
 from repository.despesas import Despesa
 from repository.extrato import ExtratoRepository
+from service.drive_service import get_last_file_from_drive
+from service.qrcode_service import gerar_salvar_qrcode
 from util.datas_uteis import meses_portugues
+from util.identificadores import caixa_mapping
 
 identificacao_sabesp = ['sabesp','cia de saneamento basico',]
 identificacao_enel = ['enel',]
 identificacao_outros = ['ecoville',]
 
 def fechar_despesas(data_inicial, data_final):
+    
+    get_last_file_from_drive()
+    
     extrato_repository = ExtratoRepository()
 
     resultados = extrato_repository.consultar(data_inicial, data_final)
@@ -36,4 +44,17 @@ def fechar_despesas(data_inicial, data_final):
         outros=despesas['outros']*-1
     )
     despesa.save()
+    
+    logging.info(f"despesa: {despesa.to_dict()}")
+    
+    for key, valor_caixa in caixa_mapping.items():
+        gerar_salvar_qrcode(
+            mes=mes,
+            ano=ano,
+            apartamento=key,
+            identification=f'{key}{mes}{ano}', 
+            description=f'Conta {key} {mes}.{ano}', 
+            amount=despesa.valor_mensal_ap1 + valor_caixa            
+        )
+    
     return despesa.to_dict()

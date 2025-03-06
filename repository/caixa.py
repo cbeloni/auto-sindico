@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, DECIMAL
 from sqlalchemy.ext.declarative import declarative_base
 from config.database import get_session
+from sqlalchemy.orm import column_property
 
 Base = declarative_base()
 
@@ -18,20 +19,19 @@ class Caixa(Base):
     caixa_ap2 = Column(DECIMAL(10, 2), nullable=False)
     caixa_ap3 = Column(DECIMAL(10, 2), nullable=False)
     caixa_ap4 = Column(DECIMAL(10, 2), nullable=False)
-    total = Column(DECIMAL(10, 2), nullable=False)
+    total = column_property(caixa_ap1 + caixa_ap2 + caixa_ap3 + caixa_ap4)
 
     def save(self):
         session = get_session()
         existing_record = session.query(Caixa).filter_by(mes=self.mes, ano=self.ano).first()
         if existing_record:
             session.delete(existing_record)
-            session.commit()
+            session.commit()        
         session.add(self)
         session.commit()
         
     def to_dict(self):
         return {
-            'id': self.id,
             'mes': self.mes,
             'ano': self.ano,
             'pagamentos_ap1': self.pagamentos_ap1,

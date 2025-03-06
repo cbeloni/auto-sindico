@@ -3,6 +3,7 @@ from dto.fechamento_requests import get_transacao_credito
 from repository.caixa import Caixa
 from repository.despesas import despesas_por_data
 from repository.extrato import ExtratoRepository
+from repository.fechamento_despesas import marcar_como_pago
 from util.datas_uteis import meses_portugues
 extrato_repository = ExtratoRepository()
 from util.identificadores import apartamento1, apartamento2, apartamento3, apartamento4
@@ -41,10 +42,10 @@ def fechar_pagamentos(data_inicial, data_final):
     
     despesas = despesas_por_data(mes, ano)    
 
-    caixa.caixa_ap1 = Decimal(caixa.pagamentos_ap1) - despesas['valor_mensal_ap1']
-    caixa.caixa_ap2 = Decimal(caixa.pagamentos_ap2) - despesas['valor_mensal_ap2']
-    caixa.caixa_ap3 = Decimal(caixa.pagamentos_ap3) - despesas['valor_mensal_ap3']
-    caixa.caixa_ap4 = Decimal(caixa.pagamentos_ap4) - despesas['valor_mensal_ap4']
+    caixa.caixa_ap1 = max(round(Decimal(caixa.pagamentos_ap1) - despesas['valor_mensal_ap1'], 2), 0)
+    caixa.caixa_ap2 = max(round(Decimal(caixa.pagamentos_ap2) - despesas['valor_mensal_ap2'], 2), 0)
+    caixa.caixa_ap3 = max(round(Decimal(caixa.pagamentos_ap3) - despesas['valor_mensal_ap3'], 2), 0)
+    caixa.caixa_ap4 = max(round(Decimal(caixa.pagamentos_ap4) - despesas['valor_mensal_ap4'], 2), 0)
     
     caixa.save()
     return caixa.to_dict()
