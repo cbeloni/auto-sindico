@@ -1,14 +1,12 @@
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
-import io
-import csv
-
-from repository.extrato import Extrato
 from repository.extrato import ExtratoRepository
-
-import logging
 import os 
 from dotenv import load_dotenv
+
+from service.drive.bb import gravar_extrato_bb
+from datetime import datetime
+
+from service.drive.pagbank import gravar_extrato_pagbank
 
 load_dotenv()
 
@@ -40,29 +38,13 @@ def get_last_file_from_drive():
     file_id = last_file['id']
     file_name = last_file['name']    
     if file_name.startswith("Extrato conta corrente"):
-        request = service.files().get_media(fileId=file_id)
-        fh = io.BytesIO()
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while done is False:
-            status, done = downloader.next_chunk()
-            print(f"Download {int(status.progress() * 100)}%.")
-
-        fh.seek(0)
-        decoded_fh = io.StringIO(fh.read().decode("latin-1"))
-        dict_reader = csv.DictReader(decoded_fh)
-        lista_extrato = []
-        for row in dict_reader:
-            valor = float(row['Valor'].replace('.', '').replace(',', '.'))
-            extrato = Extrato('bb', row['Data'], row['Lançamento'], row['Tipo Lançamento'] or 'informativo', row['Detalhes'] or 'informação de saldo', valor)
-            lista_extrato.append(extrato)
-
-        for linha in lista_extrato:
-            try:
-                extrato_repository.salvar(linha)
-            except Exception as e:
-                logging.info(f"Error ao salvar extrato: {e}")
+        lista_extrato = gravar_extrato_bb(service, file_id, extrato_repository)
         return lista_extrato
-
+    
+    current_year = datetime.now().year
+    if file_name.startswith(str(current_year)) and file_name.endswith('.csv'):
+        lista_extrato = gravar_extrato_pagbank(service, file_id, extrato_repository)
+        return lista_extrato    
+    
 if __name__ == "__main__":
     get_last_file_from_drive()
