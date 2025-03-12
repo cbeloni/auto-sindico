@@ -1,12 +1,12 @@
-from datetime import datetime
 import logging
 
+from datetime import datetime
 from dto.fechamento_requests import get_transacao_debito
 from repository.despesas import Despesa
 from repository.extrato import ExtratoRepository
 from service.drive_service import get_last_file_from_drive
 from service.qrcode_service import gerar_salvar_qrcode
-from util.datas_uteis import meses_portugues
+from util.datas_uteis import meses_portugues, ultimo_dia_mes_atual
 from util.identificadores import caixa_mapping
 
 identificacao_sabesp = ['sabesp','cia de saneamento basico',]
@@ -46,6 +46,10 @@ def fechar_despesas(data_inicial, data_final):
     despesa.save()
     
     logging.info(f"despesa: {despesa.to_dict()}")
+    
+    if datetime.now().day != ultimo_dia_mes_atual().day:
+        return despesa.to_dict()
+
     
     for key, valor_caixa in caixa_mapping.items():
         gerar_salvar_qrcode(

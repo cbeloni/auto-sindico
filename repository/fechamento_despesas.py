@@ -43,9 +43,9 @@ def fechamento_despesas_pendentes(mes, ano):
     session = get_session()
     return session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano).filter(FechamentoDespesas.status == None).all()
 
-def marcar_como_pago(mes, ano, apartamento):
+def marcar_status(mes, ano, apartamento, status):
     session = get_session()
     record = session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano, apartamento=apartamento).first()
     if record:
-        record.status = 'PAGO'
+        record.status = status
         session.commit()

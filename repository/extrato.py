@@ -35,7 +35,7 @@ class ExtratoRepository:
     def consultar(self, data_inicio: str, data_fim: str) -> list[Extrato]:
         cursor = self.db.cursor()
         query = """
-        SELECT banco, data, transacao, tipo_transacao, identificacao, valor
+        SELECT banco, data, transacao, tipo_transacao, identificacao, valor, codigo_transacao
         FROM extrato 
         WHERE data BETWEEN %s AND %s
         """
@@ -43,4 +43,4 @@ class ExtratoRepository:
         data_fim_formatted = datetime.strptime(data_fim, "%d/%m/%Y").strftime("%Y-%m-%d")
         cursor.execute(query, (data_inicio_formatted, data_fim_formatted))
         resultados = cursor.fetchall()
-        return [Extrato(banco=row[0], data=row[1].strftime("%d/%m/%Y"), transacao=row[2], tipo_transacao=row[3], identificacao=row[4], valor=row[5]) for row in resultados]
+        return [Extrato(banco=row[0], data=row[1].strftime("%d/%m/%Y"), transacao=row[2], tipo_transacao=row[3], identificacao=row[4], valor=row[5], codigo_transacao=row[6]) for row in resultados]

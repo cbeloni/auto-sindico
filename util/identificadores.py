@@ -3,7 +3,7 @@ from decimal import Decimal
 apartamento4 = ['cauê beloni', 'caue beloni','raquel santos']
 apartamento3 = ['tathiane de almeida','filipe']
 apartamento2 = ['ana carolina']
-apartamento1 = ['everton silva', 'alexandre tomassine']
+apartamento1 = ['everton silva', 'alexandre tomassine','alexandre toma']
 
 
 # email_mapping = {

@@ -31,7 +31,8 @@ class FechamentoDespesasRequest(BaseModel):
 def get_transacao_debito(banco: str) -> dict:
     transacao_map = {
         'cora': 'DÉBITO',
-        'bb': 'Saída'
+        'bb': 'Saída',
+        'pagbank': 'Saída',
     }
     return transacao_map.get(banco, 'DÉBITO')
 
@@ -39,6 +40,7 @@ def get_transacao_debito(banco: str) -> dict:
 def get_transacao_credito(banco: str) -> dict:
     transacao_map = {
         'cora': 'CRÉDITO',
-        'bb': 'Entrada'
+        'bb': 'Entrada',
+        'pagbank': 'Entrada',
     }
     return transacao_map.get(banco, 'CRÉDITO')

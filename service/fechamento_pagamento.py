@@ -3,7 +3,6 @@ from dto.fechamento_requests import get_transacao_credito
 from repository.caixa import Caixa
 from repository.despesas import despesas_por_data
 from repository.extrato import ExtratoRepository
-from repository.fechamento_despesas import marcar_como_pago
 from util.datas_uteis import meses_portugues
 extrato_repository = ExtratoRepository()
 from util.identificadores import apartamento1, apartamento2, apartamento3, apartamento4
