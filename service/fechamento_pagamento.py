@@ -4,11 +4,11 @@ from repository.caixa import Caixa
 from repository.despesas import despesas_por_data
 from repository.extrato import ExtratoRepository
 from util.datas_uteis import meses_portugues
-extrato_repository = ExtratoRepository()
 from util.identificadores import apartamento1, apartamento2, apartamento3, apartamento4
 from decimal import Decimal
 
 def fechar_pagamentos(data_inicial, data_final):
+    extrato_repository = ExtratoRepository()
     
     pagamentos = {'apartamento1': 0, 'apartamento2': 0, 'apartamento3': 0, 'apartamento4': 0}
 
