@@ -29,6 +29,7 @@ class Caixa(Base):
             session.commit()        
         session.add(self)
         session.commit()
+        return self.to_dict()
         
     def to_dict(self):
         return {

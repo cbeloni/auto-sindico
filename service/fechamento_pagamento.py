@@ -46,5 +46,5 @@ def fechar_pagamentos(data_inicial, data_final):
     caixa.caixa_ap3 = max(round(Decimal(caixa.pagamentos_ap3) - despesas['valor_mensal_ap3'], 2), 0)
     caixa.caixa_ap4 = max(round(Decimal(caixa.pagamentos_ap4) - despesas['valor_mensal_ap4'], 2), 0)
     
-    caixa.save()
-    return caixa.to_dict()
+    caixa_atualizado = caixa.save()
+    return caixa_atualizado
