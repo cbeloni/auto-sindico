@@ -45,8 +45,6 @@ def fechar_despesas(data_inicial, data_final):
         outros=despesas['outros']*-1
     )
     despesa.save()
-    time.sleep(1)
-    logging.info(f"despesa: {despesa.to_dict()}")
     
     if datetime.now().day != ultimo_dia_mes_atual().day:
         return despesa.to_dict()
