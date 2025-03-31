@@ -8,6 +8,7 @@ from service.drive_service import get_last_file_from_drive
 from service.qrcode_service import gerar_salvar_qrcode
 from util.datas_uteis import meses_portugues, ultimo_dia_mes_atual
 from util.identificadores import caixa_mapping
+import time
 
 identificacao_sabesp = ['sabesp','cia de saneamento basico',]
 identificacao_enel = ['enel',]
@@ -44,7 +45,7 @@ def fechar_despesas(data_inicial, data_final):
         outros=despesas['outros']*-1
     )
     despesa.save()
-    
+    time.sleep(1)
     logging.info(f"despesa: {despesa.to_dict()}")
     
     if datetime.now().day != ultimo_dia_mes_atual().day:
