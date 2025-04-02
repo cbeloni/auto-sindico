@@ -46,11 +46,15 @@ def concialiacao() -> list:
     return concialiacao_ordenadas_por_id_desc()
 
 @app.post("/fechamento-despesas")
-def fechamento(request: FechamentoDespesasRequest = FechamentoDespesasRequest()) -> dict:
+def fechamento(request: FechamentoDespesasRequest = None) -> dict:
+    if request is None:
+        request = FechamentoDespesasRequest()
     return fechar_despesas(request.data_inicial, request.data_final)
 
 @app.post("/fechamento-pagamentos")
-def fechamento(request: FechamentoRequest = FechamentoRequest()) -> dict:
+def fechamento(request: FechamentoRequest = None) -> dict:
+    if request is None:
+        request = FechamentoRequest()
     return fechar_pagamentos(request.data_inicial, request.data_final)
 
 @app.get("/", response_class=HTMLResponse)
