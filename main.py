@@ -6,6 +6,7 @@ from dto.cobrar_request import CobrarRequest
 from dto.email import EmailRequest
 from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest
 from dto.pix import PixRequest
+from dto.resumo_requests import ResumoRequest
 from repository.caixa import caixa_ordenado_por_id_desc
 from repository.concialicao import concialiacao_ordenadas_por_id_desc
 from repository.despesas import despesas_ordenadas_por_id_desc
@@ -15,6 +16,7 @@ from service.email_service import enviar_email, read_emails_from_gmail
 from service.fechamento_despesas import fechar_despesas
 from service.fechamento_pagamento import fechar_pagamentos
 from service.qrcode_service import generate_qrcode
+from service.resumo import consultar_tipo_transacao
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -84,3 +86,9 @@ def cobrar(request: CobrarRequest = CobrarRequest()) -> dict:
     
     cobrar_e_enviar_email(request)
     return {"message": "Email sent successfully"}
+
+@app.post("/resumo")
+def resumo(request: ResumoRequest = None):    
+    if request is None:
+        request = ResumoRequest()
+    return consultar_tipo_transacao(request)

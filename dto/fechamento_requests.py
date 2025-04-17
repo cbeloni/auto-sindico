@@ -1,22 +1,7 @@
 
 from pydantic import BaseModel
-from datetime import datetime, timedelta
 
-
-def first_day_of_current_month():
-    today = datetime.today()
-    return today.replace(day=1).strftime('%d/%m/%Y')
-
-def last_day_of_previous_month():
-    today = datetime.today()
-    first_day_of_current_month = today.replace(day=1)
-    last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
-    return last_day_of_previous_month.strftime('%d/%m/%Y')
-
-def last_day_of_current_month():
-    today = datetime.today()
-    next_month = today.replace(day=28) + timedelta(days=4) 
-    return (next_month - timedelta(days=next_month.day)).strftime('%d/%m/%Y')
+from util.datas_uteis import first_day_of_current_month, last_day_of_current_month, last_day_of_previous_month
 
 class FechamentoRequest(BaseModel):
     data_inicial: str = last_day_of_previous_month()
