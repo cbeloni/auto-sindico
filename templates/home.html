@@ -44,25 +44,25 @@
                             <td>{{ despesa.total }}</td>
                             <td>
                                 {{ despesa.valor_mensal_ap1 }}
-                                {% if despesa.caixa_ap1|default(0) > 0 %}
+                                {% if despesa.caixa_ap1|default(0) > 99 %}
                                     <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
                                 {% endif %}
                             </td>
                             <td>
                                 {{ despesa.valor_mensal_ap2 }}
-                                {% if despesa.caixa_ap2|default(0) > 0 %}
+                                {% if despesa.caixa_ap2|default(0) > 99 %}
                                     <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
                                 {% endif %}
                             </td>
                             <td>
                                 {{ despesa.valor_mensal_ap3 }}
-                                {% if despesa.caixa_ap3|default(0) > 0 %}
+                                {% if despesa.caixa_ap3|default(0) > 99 %}
                                     <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
                                 {% endif %}
                             </td>
                             <td>
                                 {{ despesa.valor_mensal_ap4 }}
-                                {% if despesa.caixa_ap4|default(0) > 0 %}
+                                {% if despesa.caixa_ap4|default(0) > 99 %}
                                     <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>
                                 {% endif %}
                             </td>
