@@ -43,6 +43,10 @@ def fechamento_despesas_pendentes(mes, ano):
     session = get_session()
     return session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano).filter(FechamentoDespesas.status == None).all()
 
+def fechamento_despesas_status(mes, ano, status, apartamento):
+    session = get_session()
+    return session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano, status=status, apartamento=apartamento).all()
+
 def marcar_status(mes, ano, apartamento, status):
     session = get_session()
     record = session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano, apartamento=apartamento).first()

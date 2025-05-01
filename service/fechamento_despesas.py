@@ -4,6 +4,7 @@ from datetime import datetime
 from dto.fechamento_requests import get_transacao_debito
 from repository.despesas import Despesa, despesas_por_data
 from repository.extrato import ExtratoRepository
+from repository.fechamento_despesas import fechamento_despesas_status
 from service.drive_service import get_last_file_from_drive
 from service.qrcode_service import gerar_salvar_qrcode
 from util.datas_uteis import meses_portugues, ultimo_dia_mes_atual
@@ -46,12 +47,18 @@ def fechar_despesas(data_inicial, data_final):
     despesa.save()
     
     despesa_saved = despesas_por_data(mes=mes, ano=ano)
-    
+           
     if datetime.now().day != ultimo_dia_mes_atual().day:
         return despesa_saved
 
     
     for key, valor_caixa in caixa_mapping.items():
+        
+        despesas_pendentes = fechamento_despesas_status(mes=mes, ano=ano, status='enviado', apartamento=key)
+        if len(despesas_pendentes) > 0:
+            logging.info(f'despesa já foi enviada para o mês: {mes} e ano: {ano} para o apartamento {key}')
+            continue
+        
         gerar_salvar_qrcode(
             mes=mes,
             ano=ano,
