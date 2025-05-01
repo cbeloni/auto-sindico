@@ -15,7 +15,7 @@ def gravar_extrato_pagbank(service, file_id, extrato_repository):
         print(f"Download {int(status.progress() * 100)}%.")
 
     fh.seek(0)
-    decoded_fh = io.StringIO(fh.read().decode("latin-1"))
+    decoded_fh = io.StringIO(fh.read().decode("utf-8"))
     dict_reader = csv.DictReader(decoded_fh, delimiter=';')
     lista_extrato = []
     for row in dict_reader:
