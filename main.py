@@ -7,6 +7,7 @@ from dto.email import EmailRequest
 from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest
 from dto.pix import PixRequest
 from dto.resumo_requests import ResumoRequest
+from dto.totalizacao import calcular_totais
 from repository.caixa import caixa_ordenado_por_id_desc
 from repository.concialicao import concialiacao_ordenadas_por_id_desc
 from repository.despesas import despesas_ordenadas_por_id_desc
@@ -62,7 +63,8 @@ def fechamento(request: FechamentoRequest = None) -> dict:
 @app.get("/", response_class=HTMLResponse)
 async def read_home(request: Request):
     despesas = concialiacao_ordenadas_por_id_desc()
-    return templates.TemplateResponse("home.html", {"request": request, "despesas": despesas})
+    totais = calcular_totais(despesas)
+    return templates.TemplateResponse("home.html", {"request": request, "despesas": despesas, **totais})
 
 @app.post("/qrcode")
 def qrcode(request: PixRequest = PixRequest(
