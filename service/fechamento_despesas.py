@@ -10,7 +10,7 @@ from service.qrcode_service import gerar_salvar_qrcode
 from util.datas_uteis import meses_portugues, ultimo_dia_mes_atual
 from util.identificadores import caixa_mapping
 
-identificacao_sabesp = ['sabesp','cia de saneamento basico',]
+identificacao_sabesp = ['sabesp','cia de saneamento basico', 'Saneamento Basico',]
 identificacao_enel = ['enel',]
 identificacao_outros = ['ecoville',]
 
