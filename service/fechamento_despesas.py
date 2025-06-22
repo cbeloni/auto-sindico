@@ -12,7 +12,7 @@ from util.identificadores import caixa_mapping
 
 identificacao_sabesp = ['sabesp','cia de saneamento basico', 'saneamento',]
 identificacao_enel = ['enel',]
-identificacao_outros = ['ecoville',]
+identificacao_outros = ['ecoville','Assai Atacadista']
 
 def fechar_despesas(data_inicial, data_final):
     
