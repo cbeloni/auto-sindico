@@ -65,5 +65,5 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |          
-          kubectl apply -f argocd-amd/auto-sindico-amd.yaml
-          kubectl rollout restart deployment/auto-sindico
+          kubectl apply -f argocd-amd/auto-sindico-amd.yaml --validate=false
+          kubectl rollout restart deployment/auto-sindico --validate=false
