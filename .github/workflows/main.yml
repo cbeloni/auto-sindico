@@ -63,6 +63,11 @@ jobs:
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG_MGC }}      
 
+      - name: Setup Kubeconfig 2
+        run: |
+          echo "${{ secrets.KUBECONFIG_MGC }}" > kubeconfig
+          export KUBECONFIG=$PWD/kubeconfig
+
       - name: Apply Kubernetes manifests
         run: |          
           kubectl apply -f argocd-amd/auto-sindico-amd.yaml --validate=false
