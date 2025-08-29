@@ -48,9 +48,11 @@ def fechar_despesas(data_inicial, data_final):
     
     despesa_saved = despesas_por_data(mes=mes, ano=ano)
 
-    if datetime.now().day != ultimo_dia_mes_atual().day and datetime.now().hour < 19:
+    if datetime.now().day != ultimo_dia_mes_atual().day:
         return despesa_saved
 
+    if datetime.now().hour < 19:
+        return despesa_saved
     
     for key, valor_caixa in caixa_mapping.items():
         
