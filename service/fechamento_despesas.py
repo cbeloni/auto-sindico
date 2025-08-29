@@ -47,8 +47,8 @@ def fechar_despesas(data_inicial, data_final):
     despesa.save()
     
     despesa_saved = despesas_por_data(mes=mes, ano=ano)
-           
-    if datetime.now().day != ultimo_dia_mes_atual().day:
+
+    if datetime.now().day != ultimo_dia_mes_atual().day and datetime.now().hour < 19:
         return despesa_saved
 
     
