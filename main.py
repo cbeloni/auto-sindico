@@ -5,6 +5,7 @@ from starlette.requests import Request
 from dto.cobrar_request import CobrarRequest
 from dto.email import EmailRequest
 from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest
+from dto.pagbank_request import MovimentosPagbankParams
 from dto.pix import PixRequest
 from dto.resumo_requests import ResumoRequest
 from dto.totalizacao import calcular_totais
@@ -94,3 +95,21 @@ def resumo(request: ResumoRequest = None):
     if request is None:
         request = ResumoRequest()
     return consultar_tipo_transacao(request)
+
+@app.post("/movimentos-pagbank")
+def movimentos_pagbank(request: MovimentosPagbankParams):
+    from integrations.pagbank import consultar_movimentos_pagbank
+    response = consultar_movimentos_pagbank(
+        data_movimento=request.data_movimento,
+        page_number=request.page_number,
+        page_size=request.page_size,
+        tipo_movimento=request.tipo_movimento
+    )
+    
+    if response is None:
+        return {"error": "Erro ao consultar movimentos PagBank"}
+    
+    return {
+        "status_code": response.status_code,
+        "data": response.json()
+    }
