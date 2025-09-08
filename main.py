@@ -17,8 +17,10 @@ from service.drive_service import get_last_file_from_drive
 from service.email_service import enviar_email, read_emails_from_gmail
 from service.fechamento_despesas import fechar_despesas
 from service.fechamento_pagamento import fechar_pagamentos
+from service.message_whatsapp import montar_messagem_whatsapp
 from service.qrcode_service import generate_qrcode
 from service.resumo import consultar_tipo_transacao
+from service.send_whatsapp import send_whatsapp_message
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -83,6 +85,13 @@ def qrcode(request: PixRequest = PixRequest(
 def send_email(request: EmailRequest) -> dict:        
     enviar_email(request.subject, request.body, request.recipient)
     return {"message": "Email sent successfully"}
+
+@app.post("/send-whatsapp")
+def send_whatsapp() -> dict:
+    transacoes = concialiacao_ordenadas_por_id_desc()
+    mensagem = montar_messagem_whatsapp(transacoes)
+    send_whatsapp_message("5511941503226", mensagem) 
+    return {"message": mensagem}
 
 @app.post("/cobrar")
 def cobrar(request: CobrarRequest = CobrarRequest()) -> dict:
