@@ -6,9 +6,9 @@ def montar_messagem_whatsapp(transacoes: list[dict]) -> str:
         if i > 0:
             mensagem += "\n---\n\n"
 
-        # Adiciona o cabeçalho do mês e o total de despesas
+        # Adiciona o cabeçalho do mês e despesas
         mensagem += f"*Referente a {mes_dados['mes']}/{mes_dados['ano']}*\n"
-        mensagem += f"*Total de despesas:* R$ {mes_dados['total']}\n"
+        mensagem += f"*Despesas:* R$ {mes_dados['total']}\n"
 
         # Verifica se existem chaves de pagamento no dicionário do mês
         if 'pagamentos_ap1' in mes_dados:
