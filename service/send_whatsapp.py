@@ -28,4 +28,3 @@ def send_whatsapp_message(number: str, message: str):
     }
     response = requests.post(url, json=payload, headers=headers)
     response.raise_for_status()
-    return response.json()

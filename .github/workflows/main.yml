@@ -39,6 +39,9 @@ jobs:
             AWS_ACCESS_KEY_ID: '${{secrets.AWS_ACCESS_KEY_ID}}'
             AWS_SECRET_ACCESS_KEY: '${{secrets.AWS_SECRET_ACCESS_KEY}}'
             ENDPOINT_URL: '${{vars.ENDPOINT_URL}}'
+            WHATSAPP_USER: '${{vars.WHATSAPP_USER}}'
+            WHATSAPP_PASS: '${{secrets.WHATSAPP_PASS}}'
+            WHATSAPP_API_URL: '${{vars.WHATSAPP_API_URL}}'
         with:
           input: .env.template
           output: .env
