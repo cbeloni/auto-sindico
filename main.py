@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from dto.cobrar_request import CobrarRequest
 from dto.email import EmailRequest
+from dto.extrato_request import ExtratoApiRequest
 from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest
 from dto.pagbank_request import MovimentosPagbankParams
 from dto.pix import PixRequest
@@ -15,6 +16,7 @@ from repository.despesas import despesas_ordenadas_por_id_desc
 from service.cobrar_service import cobrar_e_enviar_email
 from service.drive_service import get_last_file_from_drive
 from service.email_service import enviar_email, read_emails_from_gmail
+from service.extrato.pluggy import factory_extrato_service
 from service.fechamento_despesas import fechar_despesas
 from service.fechamento_pagamento import fechar_pagamentos
 from service.message_whatsapp import montar_messagem_whatsapp
@@ -50,6 +52,13 @@ def caixa() -> list:
 @app.get("/concialiacao")
 def concialiacao() -> list:
     return concialiacao_ordenadas_por_id_desc()
+
+@app.post("/extrato")
+def extrato(request: ExtratoApiRequest = None) -> dict:
+    if request is None:
+        request = ExtratoApiRequest()
+    extrato = factory_extrato_service(request.provider)
+    return extrato.obter_extrato(request.data_inicial, request.data_final)
 
 @app.post("/fechamento-despesas")
 def fechamento(request: FechamentoDespesasRequest = None) -> dict:
