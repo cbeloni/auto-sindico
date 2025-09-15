@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Type, Optional
 from typing import Type, Optional
 from typing import Dict, Type, Optional
@@ -64,12 +65,15 @@ class ExtratoPluggyService:
     def gravar_extrato(self, extrato: list[dict]) -> None:
         extrato_repository = ExtratoRepository()
         for item in extrato["results"]:
+            date_str = item.get('date')
+            formatted_date = datetime.fromisoformat(date_str.replace('Z', '+00:00')).strftime('%d/%m/%Y') if date_str else ''
+
             extrato_item = Extrato(
                 banco="pluggy",
-                data=item.get('date'),
+                data=formatted_date,
                 transacao=item.get('operationType', ''),
                 tipo_transacao=item.get('type', ''),
-                identificacao=item.get('iddescription', ''),
+                identificacao=item.get('description', ''),
                 valor=float(item.get('amount', 0.0)),
                 codigo_transacao=item.get('id', '')
             )
