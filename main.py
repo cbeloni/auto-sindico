@@ -58,7 +58,10 @@ def extrato(request: ExtratoApiRequest = None) -> dict:
     if request is None:
         request = ExtratoApiRequest()
     extrato = factory_extrato_service(request.provider)
-    return extrato.obter_extrato(request.data_inicial, request.data_final)
+    extrato_dados =  extrato.obter_extrato(request.data_inicial, request.data_final)
+    if request.gravar:
+        extrato.gravar_extrato(extrato_dados)
+    return extrato_dados
 
 @app.post("/fechamento-despesas")
 def fechamento(request: FechamentoDespesasRequest = None) -> dict:

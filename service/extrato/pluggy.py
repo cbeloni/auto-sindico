@@ -5,6 +5,8 @@ import os
 import requests
 from dotenv import load_dotenv
 
+from repository.extrato import Extrato, ExtratoRepository
+
 load_dotenv()
 
 CLIENT_ID = os.getenv('PLUGGY_CLIENT_ID')
@@ -58,3 +60,17 @@ class ExtratoPluggyService:
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
         return response.json()
+    
+    def gravar_extrato(self, extrato: list[dict]) -> None:
+        extrato_repository = ExtratoRepository()
+        for item in extrato["results"]:
+            extrato_item = Extrato(
+                banco="pluggy",
+                data=item.get('date'),
+                transacao=item.get('operationType', ''),
+                tipo_transacao=item.get('type', ''),
+                identificacao=item.get('iddescription', ''),
+                valor=float(item.get('amount', 0.0)),
+                codigo_transacao=item.get('id', '')
+            )
+            extrato_repository.salvar(extrato_item)

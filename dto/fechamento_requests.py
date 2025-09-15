@@ -18,6 +18,7 @@ def get_transacao_debito(banco: str) -> dict:
         'cora': 'DÉBITO',
         'bb': 'Saída',
         'pagbank': 'Saída',
+        "pluggy": 'DEBIT',
     }
     return transacao_map.get(banco, 'DÉBITO')
 
@@ -27,5 +28,6 @@ def get_transacao_credito(banco: str) -> dict:
         'cora': 'CRÉDITO',
         'bb': 'Entrada',
         'pagbank': 'Entrada',
+        "pluggy": 'CREDIT'
     }
     return transacao_map.get(banco, 'CRÉDITO')

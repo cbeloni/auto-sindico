@@ -11,9 +11,9 @@ def ultimo_dia_mes_atual():
     next_month = today.replace(day=28) + timedelta(days=4)
     return next_month - timedelta(days=next_month.day)
 
-def first_day_of_current_month():
+def first_day_of_current_month(strftime_format: str = '%d/%m/%Y'):
     today = datetime.today()
-    return today.replace(day=1).strftime('%d/%m/%Y')
+    return today.replace(day=1).strftime(strftime_format)
 
 def last_day_of_previous_month():
     today = datetime.today()
@@ -21,7 +21,7 @@ def last_day_of_previous_month():
     last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
     return last_day_of_previous_month.strftime('%d/%m/%Y')
 
-def last_day_of_current_month():
+def last_day_of_current_month(strftime_format: str = '%d/%m/%Y'):
     today = datetime.today()
-    next_month = today.replace(day=28) + timedelta(days=4) 
-    return (next_month - timedelta(days=next_month.day)).strftime('%d/%m/%Y')
+    next_month = today.replace(day=28) + timedelta(days=4)
+    return (next_month - timedelta(days=next_month.day)).strftime(strftime_format)
