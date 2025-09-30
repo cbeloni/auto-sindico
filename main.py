@@ -16,13 +16,14 @@ from repository.despesas import despesas_ordenadas_por_id_desc
 from service.cobrar_service import cobrar_e_enviar_email
 from service.drive_service import get_last_file_from_drive
 from service.email_service import enviar_email, read_emails_from_gmail
-from service.extrato.pluggy import factory_extrato_service
+from service.extrato.factory_extrato import factory_extrato_service
 from service.fechamento_despesas import fechar_despesas
 from service.fechamento_pagamento import fechar_pagamentos
 from service.message_whatsapp import montar_messagem_whatsapp
 from service.qrcode_service import generate_qrcode
 from service.resumo import consultar_tipo_transacao
 from service.send_whatsapp import send_whatsapp_message
+from service.extrato.extrato_abstract import ExtratoAbstract
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -57,7 +58,7 @@ def concialiacao() -> list:
 def extrato(request: ExtratoApiRequest = None) -> dict:
     if request is None:
         request = ExtratoApiRequest()
-    extrato = factory_extrato_service(request.provider)
+    extrato: ExtratoAbstract = factory_extrato_service(request.provider)
     extrato_dados =  extrato.obter_extrato(request.data_inicial, request.data_final)
     if request.gravar:
         extrato.gravar_extrato(extrato_dados)

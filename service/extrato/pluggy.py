@@ -1,12 +1,13 @@
-from datetime import datetime
-from typing import Type, Optional
-from typing import Type, Optional
-from typing import Dict, Type, Optional
+import logging
 import os
+from datetime import datetime
+from typing import Optional
+
 import requests
 from dotenv import load_dotenv
 
 from repository.extrato import Extrato, ExtratoRepository
+from service.extrato.extrato_abstract import ExtratoAbstract
 
 load_dotenv()
 
@@ -14,12 +15,6 @@ CLIENT_ID = os.getenv('PLUGGY_CLIENT_ID')
 CLIENT_SECRET = os.getenv('PLUGGY_CLIENT_SECRET')
 BASE_URL = os.getenv('PLUGGY_BASE_URL', 'https://api.pluggy.ai')
 PAGE_SIZE = os.getenv('PLUGGY_PAGE_SIZE', 500)
-
-def factory_extrato_service(service_name: str) -> Optional[Type]:
-    services: Dict[str, Type] = {
-        'pluggy': ExtratoPluggyService,
-    }
-    return services.get(service_name)()
 
 
 class TokenPluggyService:
@@ -39,7 +34,7 @@ class TokenPluggyService:
         response.raise_for_status()
         return response.json().get('apiKey')
 
-class ExtratoPluggyService:
+class ExtratoPluggyService(ExtratoAbstract):
     def obter_extrato(self, data_inicial: str, data_final: str) -> list[dict]:
         token_service = TokenPluggyService()
         api_key = token_service.obter_token()
@@ -77,4 +72,7 @@ class ExtratoPluggyService:
                 valor=float(item.get('amount', 0.0)),
                 codigo_transacao=item.get('id', '')
             )
-            extrato_repository.salvar(extrato_item)
+            try:
+                extrato_repository.salvar(extrato_item)
+            except Exception as e:
+                logging.error(f"Erro ao salvar extrato: {e}")
