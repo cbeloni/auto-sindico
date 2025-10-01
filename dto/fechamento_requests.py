@@ -1,10 +1,16 @@
 
 from pydantic import BaseModel
 
-from util.datas_uteis import first_day_of_current_month, last_day_of_current_month, last_day_of_previous_month
+from repository.fechamento_despesas import get_last_fechamento_despesas
+from util.datas_uteis import first_day_of_current_month, format_date_to_ddmmyyyy, last_day_of_current_month, last_day_of_previous_month
 
 class FechamentoRequest(BaseModel):
     data_inicial: str = last_day_of_previous_month()
+    data_final: str = last_day_of_current_month()
+
+class FechamentoPagamentosDate():
+    data_atual: str = get_last_fechamento_despesas().data_atual
+    data_inicial: str = format_date_to_ddmmyyyy(data_atual)
     data_final: str = last_day_of_current_month()
 
 

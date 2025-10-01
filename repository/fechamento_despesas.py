@@ -16,6 +16,7 @@ class FechamentoDespesas(Base):
     brcode = Column(String)
     url_qrcode = Column(String)
     status = Column(String)
+    data_atual = Column(String, default='CURRENT_TIMESTAMP')
 
     def save(self):
         session = get_session()
@@ -46,6 +47,10 @@ def fechamento_despesas_pendentes(mes, ano):
 def fechamento_despesas_status(mes, ano, status, apartamento):
     session = get_session()
     return session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano, status=status, apartamento=apartamento).all()
+
+def get_last_fechamento_despesas() -> FechamentoDespesas:
+    session = get_session()
+    return session.query(FechamentoDespesas).order_by(FechamentoDespesas.id.desc()).first()
 
 def marcar_status(mes, ano, apartamento, status):
     session = get_session()

@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 from dto.fechamento_requests import get_transacao_credito
 from repository.caixa import Caixa
 from repository.despesas import despesas_por_data
@@ -8,6 +9,7 @@ from util.identificadores import apartamento1, apartamento2, apartamento3, apart
 from decimal import Decimal
 
 def fechar_pagamentos(data_inicial, data_final):
+    logging.info(f"Fechando pagamentos de {data_inicial} até {data_final}")
     extrato_repository = ExtratoRepository()
     
     pagamentos = {'apartamento1': 0, 'apartamento2': 0, 'apartamento3': 0, 'apartamento4': 0}

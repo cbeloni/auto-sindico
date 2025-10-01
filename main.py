@@ -5,7 +5,7 @@ from starlette.requests import Request
 from dto.cobrar_request import CobrarRequest
 from dto.email import EmailRequest
 from dto.extrato_request import ExtratoApiRequest
-from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest
+from dto.fechamento_requests import FechamentoDespesasRequest, FechamentoRequest, FechamentoPagamentosDate
 from dto.pagbank_request import MovimentosPagbankParams
 from dto.pix import PixRequest
 from dto.resumo_requests import ResumoRequest
@@ -73,7 +73,7 @@ def fechamento(request: FechamentoDespesasRequest = None) -> dict:
 @app.post("/fechamento-pagamentos")
 def fechamento(request: FechamentoRequest = None) -> dict:
     if request is None:
-        request = FechamentoRequest()
+        request = FechamentoPagamentosDate()
     return fechar_pagamentos(request.data_inicial, request.data_final)
 
 @app.get("/", response_class=HTMLResponse)

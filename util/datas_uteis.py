@@ -25,3 +25,7 @@ def last_day_of_current_month(strftime_format: str = '%d/%m/%Y'):
     today = datetime.today()
     next_month = today.replace(day=28) + timedelta(days=4)
     return (next_month - timedelta(days=next_month.day)).strftime(strftime_format)
+
+def format_date_to_ddmmyyyy(date_obj: datetime) -> str:
+    """Convert datetime object to 'dd/mm/yyyy' format"""
+    return date_obj.strftime('%d/%m/%Y')
