@@ -1,5 +1,5 @@
 
-from fastapi import logger
+import logging
 from pydantic import BaseModel
 
 from repository.fechamento_despesas import get_last_fechamento_despesas
@@ -11,11 +11,11 @@ class FechamentoRequest(BaseModel):
 
 class FechamentoPagamentosDate():
     data_atual: str = get_last_fechamento_despesas().data_atual
-    logger.info(f"Data atual do último fechamento de despesas: {data_atual}")
+    logging.info(f"Data atual do último fechamento de despesas: {data_atual}")
     data_inicial: str = format_date_to_ddmmyyyy(data_atual)
-    logger.info(f"Data inicial do fechamento de pagamentos: {data_inicial}")
+    logging.info(f"Data inicial do fechamento de pagamentos: {data_inicial}")
     data_final: str = last_day_of_current_month()
-    logger.info(f"Data final do fechamento de pagamentos: {data_final}")
+    logging.info(f"Data final do fechamento de pagamentos: {data_final}")
 
 
 class FechamentoDespesasRequest(BaseModel):
