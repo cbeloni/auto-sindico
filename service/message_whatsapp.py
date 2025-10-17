@@ -1,15 +1,15 @@
 def montar_messagem_whatsapp(transacoes: list[dict]) -> str:
-    mensagem = ""
-    
+    mensagens = []
     for i, mes_dados in enumerate(transacoes[:2]):
-        # Adiciona um separador antes do segundo item
-        if i > 0:
-            mensagem += "\n---\n\n"
+        mensagem = ""
 
         # Adiciona o cabeçalho do mês e despesas
         mensagem += f"*Referente a {mes_dados['mes']}/{mes_dados['ano']}*\n"
         mensagem += f"*Despesas:* R$ {mes_dados['total']}\n"
-
+        mensagem += f"- *Enel:* R$ {mes_dados['enel']}\n"
+        mensagem += f"- *Sabesp:* R$ {mes_dados['sabesp']}\n"
+        mensagem += f"- *Faxina:* R$ {mes_dados['faxina']}\n"
+        mensagem += f"- *Outros:* R$ {mes_dados['outros']}\n"
         # Verifica se existem chaves de pagamento no dicionário do mês
         if 'pagamentos_ap1' in mes_dados:
             mensagem += "*Pagamentos realizados:*\n"
@@ -21,7 +21,6 @@ def montar_messagem_whatsapp(transacoes: list[dict]) -> str:
         else:
             # Adiciona a mensagem de que não há pagamentos registrados
             mensagem += "_(Nenhum pagamento registrado para este mês)_\n"
+        mensagens.append(mensagem.strip())
 
-    # Imprime a mensagem final, removendo espaços extras no final
-    print(mensagem.strip())
-    return mensagem.strip()
+    return mensagens

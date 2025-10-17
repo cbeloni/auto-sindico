@@ -102,9 +102,10 @@ def send_email(request: EmailRequest) -> dict:
 @app.post("/send-whatsapp")
 def send_whatsapp(numero: str = "5511941503226") -> dict:
     transacoes = concialiacao_ordenadas_por_id_desc()
-    mensagem = montar_messagem_whatsapp(transacoes)
-    send_whatsapp_message(numero, mensagem) 
-    return {"message": mensagem}
+    mensagens = montar_messagem_whatsapp(transacoes)
+    for mensagem in mensagens:
+        send_whatsapp_message(numero, mensagem)
+    return {"message": "Mensagens enviadas com sucesso"}
 
 @app.post("/cobrar")
 def cobrar(request: CobrarRequest = CobrarRequest()) -> dict:
