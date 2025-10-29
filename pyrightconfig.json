@@ -1,0 +1,12 @@
+{
+  "typeCheckingMode": "basic",
+  "reportUnknownMemberType": false,
+  "reportMissingImports": false,
+  "reportUnknownVariableType": false,
+  "reportOptionalMemberAccess": false,
+  "reportDeprecated": false,
+  "reportOptionalCall": false,
+  "reportOptionalCall": false,
+  "reportAttributeAccessIssue": false,
+  "exclude": ["**/__pycache__"]
+}
