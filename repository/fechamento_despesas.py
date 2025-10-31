@@ -16,7 +16,7 @@ class FechamentoDespesas(Base):
     brcode = Column(String)
     url_qrcode = Column(String)
     status = Column(String)
-    data_atual = Column(String, default='CURRENT_TIMESTAMP')
+    data_atual = Column(String, nullable=True)
 
     def save(self):
         session = get_session()
