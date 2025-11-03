@@ -10,12 +10,13 @@ class FechamentoRequest(BaseModel):
     data_final: str = last_day_of_current_month()
 
 class FechamentoPagamentosDate():
-    data_atual: str = get_last_fechamento_despesas().data_atual
-    logging.info(f"Data atual do último fechamento de despesas: {data_atual}")
-    data_inicial: str = format_date_to_ddmmyyyy(data_atual)
-    logging.info(f"Data inicial do fechamento de pagamentos: {data_inicial}")
-    data_final: str = last_day_of_current_month()
-    logging.info(f"Data final do fechamento de pagamentos: {data_final}")
+    def __init__(self):
+        self.data_atual: str = get_last_fechamento_despesas().data_atual
+        logging.info(f"Data atual do último fechamento de despesas: {self.data_atual}")
+        self.data_inicial: str = format_date_to_ddmmyyyy(self.data_atual)
+        logging.info(f"Data inicial do fechamento de pagamentos: {self.data_inicial}")
+        self.data_final: str = last_day_of_current_month()
+        logging.info(f"Data final do fechamento de pagamentos: {self.data_final}")
 
 
 class FechamentoDespesasRequest(BaseModel):
