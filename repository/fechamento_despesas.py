@@ -24,19 +24,19 @@ class FechamentoDespesas(Base):
         if existing_record:
             session.delete(existing_record)
             session.commit()
-        else:
-            nova_despesas = FechamentoDespesas(
-                mes=self.mes,
-                ano=self.ano,
-                apartamento=self.apartamento,
-                valor=self.valor,
-                qrcode=self.qrcode,
-                brcode=self.brcode,
-                url_qrcode=self.url_qrcode,
-                status=self.status
-            )
-            session.add(nova_despesas)
-            session.commit()
+        
+        nova_despesas = FechamentoDespesas(
+            mes=self.mes,
+            ano=self.ano,
+            apartamento=self.apartamento,
+            valor=self.valor,
+            qrcode=self.qrcode,
+            brcode=self.brcode,
+            url_qrcode=self.url_qrcode,
+            status=self.status
+        )
+        session.add(nova_despesas)
+        session.commit()
     
     def to_dict(self):
         return {
