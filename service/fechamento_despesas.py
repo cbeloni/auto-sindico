@@ -66,7 +66,7 @@ def fechar_despesas(data_inicial, data_final):
             ano=ano,
             apartamento=key,
             identification=f'{key}{mes}{ano}', 
-            description=f'Conta {key} {mes}.{ano}', 
+            description=f'Conta{key}{mes}.{ano}', 
             amount=despesa_saved['valor_mensal_ap1'] + valor_caixa            
         )
     

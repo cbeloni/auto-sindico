@@ -28,7 +28,8 @@ from service.qrcode_service import generate_qrcode
 from service.resumo import consultar_tipo_transacao
 from service.send_whatsapp import send_whatsapp_message
 from service.extrato.extrato_abstract import ExtratoAbstract
-
+from service.cobrar_service import cobrar_e_enviar_whatsapp
+    
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
@@ -133,6 +134,10 @@ def cobrar(request: CobrarRequest = CobrarRequest()) -> dict:
     cobrar_e_enviar_email(request)
     return {"message": "Email sent successfully"}
 
+@app.post("/cobrar-whatsapp")
+def cobrar_whatsapp(request: CobrarRequest = CobrarRequest()) -> dict:
+    cobrar_e_enviar_whatsapp(request)
+    return {"message": "WhatsApp messages sent successfully"}
 
 @app.post("/resumo")
 def resumo(request: ResumoRequest = None):

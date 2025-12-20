@@ -16,6 +16,7 @@ class FechamentoDespesas(Base):
     brcode = Column(String)
     url_qrcode = Column(String)
     status = Column(String)
+    notificacao_whatsapp = Column(String)
     data_atual = Column(String, nullable=True)
 
     def save(self):
@@ -33,7 +34,8 @@ class FechamentoDespesas(Base):
             qrcode=self.qrcode,
             brcode=self.brcode,
             url_qrcode=self.url_qrcode,
-            status=self.status
+            status=self.status,
+            notificacao_whatsapp=self.notificacao_whatsapp
         )
         session.add(nova_despesas)
         session.commit()
@@ -53,7 +55,7 @@ class FechamentoDespesas(Base):
         
 def fechamento_despesas_pendentes(mes, ano):
     session = get_session()
-    return session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano).filter(FechamentoDespesas.status == None).all()
+    return session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano).filter(FechamentoDespesas.notificacao_whatsapp == 'pendente').all()
 
 def fechamento_despesas_status(mes, ano, status, apartamento):
     session = get_session()
@@ -68,4 +70,11 @@ def marcar_status(mes, ano, apartamento, status):
     record = session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano, apartamento=apartamento).first()
     if record:
         record.status = status
+        session.commit()
+        
+def marcar_status_whatsapp(mes, ano, apartamento, status):
+    session = get_session()
+    record = session.query(FechamentoDespesas).filter_by(mes=mes, ano=ano, apartamento=apartamento).first()
+    if record:
+        record.notificacao_whatsapp = status
         session.commit()

@@ -12,6 +12,12 @@ email_mapping = {
     'AP3': "tathigarcia@hotmail.com",
     'AP4': "caue.beloni@unifesp.br"
 }
+telefone_mapping = {
+    'AP1': "5511998107488",
+    'AP2': "5512988591266",
+    'AP3': "5511983012408",
+    'AP4': "5511986768497"
+}
 # email_mapping = {
 #     'AP1': "caue.beloni@unifesp.br",
 #     'AP2': "caue.beloni@unifesp.br",
