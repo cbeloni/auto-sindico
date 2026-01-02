@@ -3,3 +3,4 @@
 Segue o QRCODE referente à taxa condominial do mês de *{{ mes }}*.
 
 💰 *Valor:* R$ {{ "%.2f"|format(valor) }}
+🔑 *Chave PIX:* 11986768497
