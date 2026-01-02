@@ -1,14 +1,14 @@
 from fastapi.templating import Jinja2Templates
 
 from dto.cobrar_request import CobrarRequest
-from repository.fechamento_despesas import fechamento_despesas_pendentes, marcar_status, marcar_status_whatsapp
+from repository.fechamento_despesas import fechamento_despesas_pendentes, marcar_status, marcar_status_whatsapp, FechamentoDespesas
 from service.email_service import enviar_email
 from service.whatsapp_service import enviar_cobranca_whatsapp
 from util.identificadores import email_mapping, telefone_mapping
 
 def cobrar_e_enviar_email(fechamento_request: CobrarRequest):
     
-    fechamentos_pendentes = fechamento_despesas_pendentes(mes=fechamento_request.mes, ano=fechamento_request.ano)
+    fechamentos_pendentes = fechamento_despesas_pendentes(mes=fechamento_request.mes, ano=fechamento_request.ano, filtro=FechamentoDespesas.status == 'pendente')
     
     for fechamento in fechamentos_pendentes:
     
@@ -30,9 +30,9 @@ def cobrar_e_enviar_email(fechamento_request: CobrarRequest):
         marcar_status(mes=fechamento.mes, ano=fechamento.ano, apartamento=fechamento.apartamento, status='enviado')
         
 def cobrar_e_enviar_whatsapp(fechamento_request: CobrarRequest):
-    
-    fechamentos_pendentes = fechamento_despesas_pendentes(mes=fechamento_request.mes, ano=fechamento_request.ano)
-    
+
+    fechamentos_pendentes = fechamento_despesas_pendentes(mes=fechamento_request.mes, ano=fechamento_request.ano, filtro=FechamentoDespesas.notificacao_whatsapp == 'pendente')
+
     for fechamento in fechamentos_pendentes:
     
         templates = Jinja2Templates(directory="templates")
