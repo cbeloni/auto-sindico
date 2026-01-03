@@ -35,7 +35,8 @@ class FechamentoDespesas(Base):
             brcode=self.brcode,
             url_qrcode=self.url_qrcode,
             status=self.status,
-            notificacao_whatsapp=self.notificacao_whatsapp
+            notificacao_whatsapp=self.notificacao_whatsapp,
+            data_atual=self.data_atual
         )
         session.add(nova_despesas)
         session.commit()
