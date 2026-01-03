@@ -862,7 +862,7 @@
         "pypix": {
             "git": "git+https://github.com/cleitonleonel/pypix.git",
             "markers": "python_version >= '3.6' and python_version < '4.0'",
-            "ref": "ae6cf89bc9e4b5f78f357dc68463c33ee0923f16"
+            "ref": "a6ac98a2be213c690033a6e3303c92de398f7845"
         },
         "pypng": {
             "hashes": [
