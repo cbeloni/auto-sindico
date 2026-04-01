@@ -47,7 +47,7 @@ class ExtratoPluggyService(ExtratoAbstract):
             'x-api-key': api_key
         }
         params = {
-            'accountId': '99f7d3e6-df44-48dd-bb6a-bc012224707f',
+            'accountId': '3bbd1f89-d875-4835-9d83-121260f48dc9',
             'pageSize': PAGE_SIZE,
             'from': data_inicial,
             'to': data_final,
