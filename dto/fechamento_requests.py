@@ -1,13 +1,13 @@
 
 import logging
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from repository.fechamento_despesas import get_last_fechamento_despesas
 from util.datas_uteis import first_day_of_current_month, format_date_to_ddmmyyyy, last_day_of_current_month, last_day_of_previous_month
 
 class FechamentoRequest(BaseModel):
-    data_inicial: str = last_day_of_previous_month()
-    data_final: str = last_day_of_current_month()
+    data_inicial: str = Field(default_factory=last_day_of_previous_month)
+    data_final: str = Field(default_factory=last_day_of_current_month)
 
 class FechamentoPagamentosDate():
     def __init__(self):
@@ -20,8 +20,8 @@ class FechamentoPagamentosDate():
 
 
 class FechamentoDespesasRequest(BaseModel):
-    data_inicial: str = first_day_of_current_month()
-    data_final: str = last_day_of_current_month()
+    data_inicial: str = Field(default_factory=first_day_of_current_month)
+    data_final: str = Field(default_factory=last_day_of_current_month)
     
 
 def get_transacao_debito(banco: str) -> dict:

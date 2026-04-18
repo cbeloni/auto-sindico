@@ -130,12 +130,16 @@ def send_whatsapp(numero: str = "5511941503226") -> dict:
 
 
 @app.post("/cobrar")
-def cobrar(request: CobrarRequest = CobrarRequest()) -> dict:
+def cobrar(request: CobrarRequest = None) -> dict:
+    if request is None:
+        request = CobrarRequest()
     cobrar_e_enviar_email(request)
     return {"message": "Email sent successfully"}
 
 @app.post("/cobrar-whatsapp")
-def cobrar_whatsapp(request: CobrarRequest = CobrarRequest()) -> dict:
+def cobrar_whatsapp(request: CobrarRequest = None) -> dict:
+    if request is None:
+        request = CobrarRequest()
     cobrar_e_enviar_whatsapp(request)
     return {"message": "WhatsApp messages sent successfully"}
 

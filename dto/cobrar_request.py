@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime, timedelta
 from util.datas_uteis import meses_portugues
 
@@ -11,7 +11,7 @@ def get_ano():
     return str(today.year)
 
 class CobrarRequest(BaseModel):
-    mes: str = get_mes()
-    ano: str = get_ano()
+    mes: str = Field(default_factory=get_mes)
+    ano: str = Field(default_factory=get_ano)
         
         
