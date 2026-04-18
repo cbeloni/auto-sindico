@@ -4,195 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto síndico - gestão automática de condomínios</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@500;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --bg: #f4f7ef;
+            --bg-soft: #eef3e2;
+            --surface: #ffffff;
+            --ink: #1c2b21;
+            --muted: #5b6b61;
+            --brand: #1f6f4a;
+            --brand-dark: #124e32;
+            --accent: #d89b2b;
+            --line: #d9e4d3;
+            --shadow: 0 14px 35px rgba(16, 54, 34, 0.09);
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            font-family: "DM Sans", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(1200px 400px at 90% -20%, rgba(216, 155, 43, 0.18), transparent 60%),
+                radial-gradient(900px 350px at -20% 10%, rgba(31, 111, 74, 0.13), transparent 58%),
+                var(--bg);
         }
-        
+
         .header {
-            background-color: #003679;
-            color: rgb(255, 255, 255);
-            padding: 20px 0;
-            margin-bottom: 0;
+            background: linear-gradient(125deg, var(--brand-dark), var(--brand));
+            color: #f7fff6;
+            padding: 36px 0 42px;
             position: relative;
+            overflow: hidden;
         }
-        
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .btn-custom {
-            background-color: #007bff;
-            color: rgb(255, 255, 255);
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-        }
-        
-        .btn-custom:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
-        }
-        
-        .feature-section {
-            padding: 60px 0;
-            background-color: white;
-        }
-        
-        .feature-card {
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            height: 100%;
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-        
-        .navbar {
-            background-color: transparent;
+
+        .header::before {
+            content: "";
             position: absolute;
-            width: 100%;
-            z-index: 100;
-            padding-top: 20px;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            right: -100px;
+            top: -180px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);
         }
-        
-        .navbar-brand {
-            color: white;
+
+        .header-content {
+            max-width: 920px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Sora", sans-serif;
+        }
+
+        .display-4 {
+            letter-spacing: -0.02em;
+        }
+
+        .lead {
+            color: rgba(247, 255, 246, 0.88);
+        }
+
+        .content-shell {
+            margin-top: -14px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(6px);
+            padding: 22px;
+        }
+
+        .feature-card {
+            padding: 22px;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            box-shadow: 0 10px 24px rgba(16, 54, 34, 0.06);
+            background-color: var(--surface);
+            height: 100%;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(16, 54, 34, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--brand);
+            margin-bottom: 14px;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 14px;
+        }
+
+        .nav-tabs .nav-link {
+            border: 0;
+            color: var(--muted);
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
             font-weight: 700;
-            font-size: 1.8rem;
+            padding: 0.65rem 1rem;
         }
-        
+
+        .nav-tabs .nav-link.active {
+            color: var(--brand-dark);
+            background: transparent;
+            border-bottom-color: var(--accent);
+        }
+
+        .table {
+            --bs-table-bg: transparent;
+            margin-bottom: 0;
+        }
+
+        .table > :not(caption) > * > * {
+            padding: 0.8rem 0.65rem;
+            border-bottom-color: var(--line);
+        }
+
+        .table thead th {
+            background: var(--bg-soft);
+            color: var(--brand-dark);
+            font-family: "Sora", sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(31, 111, 74, 0.05);
+        }
+
+        .table-responsive {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--surface);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .check-icon {
+            color: var(--brand);
+            margin-left: 4px;
+        }
+
         .footer {
-            background-color: #003679;
-            color: white;
-            padding: 30px 0;
+            background: linear-gradient(145deg, #1b422f, #103523);
+            color: #dbe8de;
+            padding: 20px 0;
             text-align: center;
         }
-        
+
         .cta-section {
-            background-color: #f8f9fa;
-            padding: 60px 0;
-            text-align: center;
+            padding: 18px 0;
         }
-        
+
+        .metric-value {
+            font-family: "Sora", sans-serif;
+            font-weight: 800;
+            color: var(--brand-dark);
+        }
+
+        .metric-label {
+            color: var(--muted);
+        }
+
         @media (max-width: 768px) {
             .header {
-                padding: 60px 0;
+                padding: 28px 0 34px;
+            }
+
+            .content-shell {
+                padding: 14px;
+                border-radius: 14px;
+            }
+
+            .feature-card {
+                padding: 18px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Auto Síndico</a>
-        </div>
-    </nav> -->
-
-    <!-- Header -->
     <div class="header text-center">
         <div class="container">
             <div class="header-content">
                 <h1 class="display-4 fw-bold mb-4">Auto Síndico</h1>
                 <p class="lead mb-5">Gestão automática de condomínios</p>
-                <!-- <a href="#" class="btn-custom">Comece Agora</a> -->
             </div>
         </div>
     </div>
-    
-    <!-- Content Section -->
-    <section class="py-5">
+
+    <section class="py-4 py-md-5">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-12">
-                    {% block content %}{% endblock %}
+                    <div class="content-shell">
+                        {% block content %}{% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!-- Features Section -->
-    <!-- <section class="feature-section">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <h4>Gestão Simplificada</h4>
-                        <p>Automatize todas as tarefas administrativas do seu condomínio com facilidade.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <h4>Controle Financeiro</h4>
-                        <p>Administre receitas e despesas do condomínio de forma transparente.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h4>Comunicação Eficiente</h4>
-                        <p>Mantenha todos os moradores informados e conectados.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>  -->
-        
-    <!-- CTA Section -->
     <section class="cta-section">
-        <div class="container">
-            <!-- <h2 class="mb-4">Pronto para transformar a gestão do seu condomínio?</h2> -->
-            <!-- <a href="#" class="btn-custom">Começar Gratuitamente</a> -->
-        </div>
+        <div class="container"></div>
     </section>
-    
-    <!-- Footer -->
+
     <footer class="footer">
         <div class="container">
             <p class="mb-0">&copy; 2025 Auto Síndico. Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
