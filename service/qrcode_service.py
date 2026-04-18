@@ -30,7 +30,7 @@ def generate_qrcode(pix_data: PixRequest) -> dict:
     
     return {'qrcode': base64qr, 'br_code': pix.get_br_code(), 'nome_arquivo': nome_arquivo}
 
-def gerar_salvar_qrcode(mes, ano, apartamento, identification, description, amount):
+def gerar_salvar_qrcode(mes, ano, apartamento, identification, description, amount, data_atual=None):
     pix = PixRequest(
         name_receiver='Cauê Beloni',
         city_receiver='Santo André',
@@ -48,7 +48,8 @@ def gerar_salvar_qrcode(mes, ano, apartamento, identification, description, amou
         valor=amount, 
         brcode=pix_response.get("br_code"), 
         qrcode=pix_response.get("qrcode"), 
-        url_qrcode=pix_response.get("nome_arquivo")
+        url_qrcode=pix_response.get("nome_arquivo"),
+        data_atual=data_atual
     )
     fechamento_despesas.save()
 

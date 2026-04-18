@@ -1,9 +1,10 @@
 
 import logging
+from datetime import datetime
 from pydantic import BaseModel, Field
 
 from repository.fechamento_despesas import get_last_fechamento_despesas
-from util.datas_uteis import first_day_of_current_month, format_date_to_ddmmyyyy, last_day_of_current_month, last_day_of_previous_month
+from util.datas_uteis import first_day_of_current_month, last_day_of_current_month, last_day_of_previous_month
 
 class FechamentoRequest(BaseModel):
     data_inicial: str = Field(default_factory=last_day_of_previous_month)
@@ -11,12 +12,31 @@ class FechamentoRequest(BaseModel):
 
 class FechamentoPagamentosDate():
     def __init__(self):
-        self.data_atual: str = get_last_fechamento_despesas().data_atual
-        logging.info(f"Data atual do último fechamento de despesas: {self.data_atual}")
-        self.data_inicial: str = format_date_to_ddmmyyyy(self.data_atual)
+        ultimo_fechamento = get_last_fechamento_despesas()
+        data_atual = getattr(ultimo_fechamento, "data_atual", None) if ultimo_fechamento else None
+        logging.info(f"Data atual do último fechamento de despesas: {data_atual}")
+
+        if isinstance(data_atual, datetime):
+            self.data_inicial = data_atual.strftime("%d/%m/%Y")
+        elif isinstance(data_atual, str) and data_atual.strip():
+            data_atual = data_atual.strip()
+            self.data_inicial = self._normalizar_data(data_atual)
+        else:
+            self.data_inicial = last_day_of_previous_month()
+
         logging.info(f"Data inicial do fechamento de pagamentos: {self.data_inicial}")
         self.data_final: str = last_day_of_current_month()
         logging.info(f"Data final do fechamento de pagamentos: {self.data_final}")
+
+    @staticmethod
+    def _normalizar_data(data: str) -> str:
+        formatos = ("%d/%m/%Y", "%Y-%m-%d", "%Y-%m-%d %H:%M:%S")
+        for formato in formatos:
+            try:
+                return datetime.strptime(data, formato).strftime("%d/%m/%Y")
+            except ValueError:
+                continue
+        return last_day_of_previous_month()
 
 
 class FechamentoDespesasRequest(BaseModel):
