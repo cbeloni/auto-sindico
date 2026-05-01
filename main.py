@@ -80,7 +80,7 @@ def extrato(request: ExtratoApiRequest = None) -> dict:
 def fechamento_despesas(request: FechamentoDespesasRequest = None) -> dict:
     if request is None:
         request = FechamentoDespesasRequest()
-    return fechar_despesas(request.data_inicial, request.data_final)
+    return fechar_despesas(**request.model_dump())
 
 
 @app.post("/fechamento-pagamentos")

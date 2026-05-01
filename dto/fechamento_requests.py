@@ -42,6 +42,7 @@ class FechamentoPagamentosDate():
 class FechamentoDespesasRequest(BaseModel):
     data_inicial: str = Field(default_factory=first_day_of_current_month)
     data_final: str = Field(default_factory=last_day_of_current_month)
+    valida_mes: bool = True
     
 
 def get_transacao_debito(banco: str) -> dict:

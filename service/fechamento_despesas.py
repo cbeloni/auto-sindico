@@ -14,7 +14,7 @@ identificacao_sabesp = ['sabesp','cia de saneamento basico', 'saneamento',]
 identificacao_enel = ['enel',]
 identificacao_outros = ['ecoville','assai atacadista', 'sonda', 'carrefour', 'shpp']
 
-def fechar_despesas(data_inicial, data_final):
+def fechar_despesas(data_inicial, data_final, valida_mes):
     
     get_last_file_from_drive()
     
@@ -48,10 +48,10 @@ def fechar_despesas(data_inicial, data_final):
     
     despesa_saved = despesas_por_data(mes=mes, ano=ano)
 
-    if datetime.now().day != ultimo_dia_mes_atual().day:
+    if datetime.now().day != ultimo_dia_mes_atual().day and valida_mes:
         return despesa_saved
 
-    if datetime.now().hour < 19:
+    if datetime.now().hour < 19 and valida_mes:
         return despesa_saved
     
     for key, valor_caixa in caixa_mapping.items():
