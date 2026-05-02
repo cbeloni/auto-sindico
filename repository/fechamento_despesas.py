@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DECIMAL
 from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 from config.database import get_session
-from util.datas_uteis import normalizar_data_mysql
 
 Base = declarative_base()
 
@@ -27,7 +27,7 @@ class FechamentoDespesas(Base):
             session.delete(existing_record)
             session.commit()
 
-        data_atual = normalizar_data_mysql(self.data_atual)
+        data_atual = self.data_atual if self.data_atual else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         nova_despesas = FechamentoDespesas(
             mes=self.mes,

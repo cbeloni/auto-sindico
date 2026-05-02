@@ -29,29 +29,3 @@ def last_day_of_current_month(strftime_format: str = '%d/%m/%Y'):
 def format_date_to_ddmmyyyy(date_obj: datetime) -> str:
     """Convert datetime object to 'dd/mm/yyyy' format"""
     return date_obj.strftime('%d/%m/%Y')
-
-def normalizar_data_mysql(valor_data) -> str:
-    if not valor_data:
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    if isinstance(valor_data, datetime):
-        return valor_data.strftime("%Y-%m-%d %H:%M:%S")
-
-    if isinstance(valor_data, str):
-        data = valor_data.strip()
-        formatos_entrada = (
-            "%d/%m/%Y",
-            "%Y-%m-%d",
-            "%Y-%m-%d %H:%M:%S",
-            "%d/%m/%Y %H:%M:%S",
-        )
-        for formato in formatos_entrada:
-            try:
-                dt = datetime.strptime(data, formato)
-                if formato in ("%d/%m/%Y", "%Y-%m-%d"):
-                    return dt.strftime("%Y-%m-%d")
-                return dt.strftime("%Y-%m-%d %H:%M:%S")
-            except ValueError:
-                continue
-
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
