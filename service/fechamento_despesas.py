@@ -7,7 +7,7 @@ from repository.extrato import ExtratoRepository
 from repository.fechamento_despesas import fechamento_despesas_status
 from service.drive_service import get_last_file_from_drive
 from service.qrcode_service import gerar_salvar_qrcode
-from util.datas_uteis import meses_portugues, ultimo_dia_mes_atual
+from util.datas_uteis import meses_portugues, normalizar_data_mysql, ultimo_dia_mes_atual
 from util.identificadores import caixa_mapping
 
 identificacao_sabesp = ['sabesp','cia de saneamento basico', 'saneamento',]
@@ -68,7 +68,7 @@ def fechar_despesas(data_inicial, data_final, valida_mes):
             identification=f'{key}{mes}{ano}', 
             description=f'Conta{key}{mes}.{ano}', 
             amount=despesa_saved['valor_mensal_ap1'] + valor_caixa,
-            data_atual=data_final
+            data_atual=normalizar_data_mysql(data_final)
         )
     
     return despesa_saved
