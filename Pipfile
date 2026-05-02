@@ -19,6 +19,7 @@ fastapi = "*"
 pypix = {git = "git+https://github.com/cleitonleonel/pypix.git"}
 boto3 = "1.35.99"
 aiomysql = "*"
+boto3-stubs = "~=1.35.99"
 
 [dev-packages]
 
